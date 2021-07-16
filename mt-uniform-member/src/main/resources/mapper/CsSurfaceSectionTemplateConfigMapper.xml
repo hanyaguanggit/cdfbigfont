@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsSurfaceSectionTemplateConfigMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.CsSurfaceSectionTemplateConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="templateId" property="templateId" jdbcType="INTEGER" />
+    <result column="sitestructureId" property="sitestructureId" jdbcType="INTEGER" />
+    <result column="positionId" property="positionId" jdbcType="INTEGER" />
+    <result column="positiontypeId" property="positiontypeId" jdbcType="INTEGER" />
+    <result column="linkTabname" property="linkTabname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, templateId, sitestructureId, positionId, positiontypeId, linkTabname
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cs_surface_section_template_config
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_surface_section_template_config
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.CsSurfaceSectionTemplateConfig" >
+    insert into cs_surface_section_template_config (id, templateId, sitestructureId, 
+      positionId, positiontypeId, linkTabname
+      )
+    values (#{id,jdbcType=INTEGER}, #{templateId,jdbcType=INTEGER}, #{sitestructureId,jdbcType=INTEGER}, 
+      #{positionId,jdbcType=INTEGER}, #{positiontypeId,jdbcType=INTEGER}, #{linkTabname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.CsSurfaceSectionTemplateConfig" useGeneratedKeys="true" keyProperty="id">
+    insert into cs_surface_section_template_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="templateId != null" >
+        templateId,
+      </if>
+      <if test="sitestructureId != null" >
+        sitestructureId,
+      </if>
+      <if test="positionId != null" >
+        positionId,
+      </if>
+      <if test="positiontypeId != null" >
+        positiontypeId,
+      </if>
+      <if test="linkTabname != null" >
+        linkTabname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="templateId != null" >
+        #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="sitestructureId != null" >
+        #{sitestructureId,jdbcType=INTEGER},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="positiontypeId != null" >
+        #{positiontypeId,jdbcType=INTEGER},
+      </if>
+      <if test="linkTabname != null" >
+        #{linkTabname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.CsSurfaceSectionTemplateConfig" >
+    update cs_surface_section_template_config
+    <set >
+      <if test="templateId != null" >
+        templateId = #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="sitestructureId != null" >
+        sitestructureId = #{sitestructureId,jdbcType=INTEGER},
+      </if>
+      <if test="positionId != null" >
+        positionId = #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="positiontypeId != null" >
+        positiontypeId = #{positiontypeId,jdbcType=INTEGER},
+      </if>
+      <if test="linkTabname != null" >
+        linkTabname = #{linkTabname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.CsSurfaceSectionTemplateConfig" >
+    update cs_surface_section_template_config
+    set templateId = #{templateId,jdbcType=INTEGER},
+      sitestructureId = #{sitestructureId,jdbcType=INTEGER},
+      positionId = #{positionId,jdbcType=INTEGER},
+      positiontypeId = #{positiontypeId,jdbcType=INTEGER},
+      linkTabname = #{linkTabname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

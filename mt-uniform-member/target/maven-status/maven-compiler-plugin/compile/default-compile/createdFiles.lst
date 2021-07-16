@@ -1,0 +1,13 @@
+cn\com\ktm\mt\controller\MemberApiImpl.class
+cn\com\ktm\mt\controller\TestController.class
+cn\com\ktm\mt\module\ValidCodeModule.class
+cn\com\ktm\mt\module\MemberModule.class
+cn\com\ktm\mt\mapper\UserMapper.class
+cn\com\ktm\mt\MemberApplication.class
+cn\com\ktm\mt\controller\MemberlcApiImpl.class
+cn\com\ktm\mt\mapper\SmsTemplateMapper.class
+cn\com\ktm\mt\service\SmsTemplateService.class
+cn\com\ktm\mt\mapper\OrganizationMapper.class
+cn\com\ktm\mt\service\OrganizationService.class
+cn\com\ktm\mt\service\UserService.class
+cn\com\ktm\mt\module\SmsCodeModule.class

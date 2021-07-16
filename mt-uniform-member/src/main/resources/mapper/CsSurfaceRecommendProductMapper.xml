@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsSurfaceRecommendProductMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.CsSurfaceRecommendProduct" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sectionId" property="sectionId" jdbcType="INTEGER" />
+    <result column="productId" property="productId" jdbcType="INTEGER" />
+    <result column="productLink" property="productLink" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="goodsId" property="goodsId" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="recommendedReason" property="recommendedReason" jdbcType="VARCHAR" />
+    <result column="picId" property="picId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sectionId, productId, productLink, title, goodsId, description, recommendedReason, 
+    picId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cs_surface_recommend_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_surface_recommend_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.CsSurfaceRecommendProduct" >
+    insert into cs_surface_recommend_product (id, sectionId, productId, 
+      productLink, title, goodsId, 
+      description, recommendedReason, picId
+      )
+    values (#{id,jdbcType=INTEGER}, #{sectionId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{productLink,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{recommendedReason,jdbcType=VARCHAR}, #{picId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.CsSurfaceRecommendProduct" useGeneratedKeys="true" keyProperty="id">
+    insert into cs_surface_recommend_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sectionId != null" >
+        sectionId,
+      </if>
+      <if test="productId != null" >
+        productId,
+      </if>
+      <if test="productLink != null" >
+        productLink,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="goodsId != null" >
+        goodsId,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="recommendedReason != null" >
+        recommendedReason,
+      </if>
+      <if test="picId != null" >
+        picId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productLink != null" >
+        #{productLink,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendedReason != null" >
+        #{recommendedReason,jdbcType=VARCHAR},
+      </if>
+      <if test="picId != null" >
+        #{picId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.CsSurfaceRecommendProduct" >
+    update cs_surface_recommend_product
+    <set >
+      <if test="sectionId != null" >
+        sectionId = #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        productId = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productLink != null" >
+        productLink = #{productLink,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goodsId = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendedReason != null" >
+        recommendedReason = #{recommendedReason,jdbcType=VARCHAR},
+      </if>
+      <if test="picId != null" >
+        picId = #{picId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.CsSurfaceRecommendProduct" >
+    update cs_surface_recommend_product
+    set sectionId = #{sectionId,jdbcType=INTEGER},
+      productId = #{productId,jdbcType=INTEGER},
+      productLink = #{productLink,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      goodsId = #{goodsId,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      recommendedReason = #{recommendedReason,jdbcType=VARCHAR},
+      picId = #{picId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsSurfaceBestSellerListMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.CsSurfaceBestSellerList" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sectionId" property="sectionId" jdbcType="INTEGER" />
+    <result column="picId" property="picId" jdbcType="INTEGER" />
+    <result column="goodsIds" property="goodsIds" jdbcType="VARCHAR" />
+    <result column="displayType" property="displayType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sectionId, picId, goodsIds, displayType
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cs_surface_best_seller_list
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_surface_best_seller_list
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.CsSurfaceBestSellerList" >
+    insert into cs_surface_best_seller_list (id, sectionId, picId, 
+      goodsIds, displayType)
+    values (#{id,jdbcType=INTEGER}, #{sectionId,jdbcType=INTEGER}, #{picId,jdbcType=INTEGER}, 
+      #{goodsIds,jdbcType=VARCHAR}, #{displayType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.CsSurfaceBestSellerList" useGeneratedKeys="true" keyProperty="id">
+    insert into cs_surface_best_seller_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sectionId != null" >
+        sectionId,
+      </if>
+      <if test="picId != null" >
+        picId,
+      </if>
+      <if test="goodsIds != null" >
+        goodsIds,
+      </if>
+      <if test="displayType != null" >
+        displayType,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="picId != null" >
+        #{picId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsIds != null" >
+        #{goodsIds,jdbcType=VARCHAR},
+      </if>
+      <if test="displayType != null" >
+        #{displayType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.CsSurfaceBestSellerList" >
+    update cs_surface_best_seller_list
+    <set >
+      <if test="sectionId != null" >
+        sectionId = #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="picId != null" >
+        picId = #{picId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsIds != null" >
+        goodsIds = #{goodsIds,jdbcType=VARCHAR},
+      </if>
+      <if test="displayType != null" >
+        displayType = #{displayType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.CsSurfaceBestSellerList" >
+    update cs_surface_best_seller_list
+    set sectionId = #{sectionId,jdbcType=INTEGER},
+      picId = #{picId,jdbcType=INTEGER},
+      goodsIds = #{goodsIds,jdbcType=VARCHAR},
+      displayType = #{displayType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

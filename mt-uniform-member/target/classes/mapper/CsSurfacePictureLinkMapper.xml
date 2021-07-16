@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsSurfacePictureLinkMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.CsSurfacePictureLink" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sectionId" property="sectionId" jdbcType="INTEGER" />
+    <result column="picture" property="picture" jdbcType="INTEGER" />
+    <result column="pictureEN" property="pictureEN" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="urlEN" property="urlEN" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sectionId, picture, pictureEN, url, urlEN
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cs_surface_picturelink
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_surface_picturelink
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.CsSurfacePictureLink" >
+    insert into cs_surface_picturelink (id, sectionId, picture, 
+      pictureEN, url, urlEN
+      )
+    values (#{id,jdbcType=INTEGER}, #{sectionId,jdbcType=INTEGER}, #{picture,jdbcType=INTEGER}, 
+      #{pictureEN,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{urlEN,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.CsSurfacePictureLink" useGeneratedKeys="true" keyProperty="id">
+    insert into cs_surface_picturelink
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sectionId != null" >
+        sectionId,
+      </if>
+      <if test="picture != null" >
+        picture,
+      </if>
+      <if test="pictureEN != null" >
+        pictureEN,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="urlEN != null" >
+        urlEN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null" >
+        #{picture,jdbcType=INTEGER},
+      </if>
+      <if test="pictureEN != null" >
+        #{pictureEN,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="urlEN != null" >
+        #{urlEN,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.CsSurfacePictureLink" >
+    update cs_surface_picturelink
+    <set >
+      <if test="sectionId != null" >
+        sectionId = #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null" >
+        picture = #{picture,jdbcType=INTEGER},
+      </if>
+      <if test="pictureEN != null" >
+        pictureEN = #{pictureEN,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="urlEN != null" >
+        urlEN = #{urlEN,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.CsSurfacePictureLink" >
+    update cs_surface_picturelink
+    set sectionId = #{sectionId,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=INTEGER},
+      pictureEN = #{pictureEN,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      urlEN = #{urlEN,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

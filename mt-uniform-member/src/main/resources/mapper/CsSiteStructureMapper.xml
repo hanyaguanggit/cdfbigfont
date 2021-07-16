@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsSiteStructureMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.CsSiteStructure" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="parentId" property="parentId" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, type, parentId, url, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cs_site_structure
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_site_structure
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.CsSiteStructure" >
+    insert into cs_site_structure (id, name, type, 
+      parentId, url, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+      #{parentId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.CsSiteStructure" >
+    insert into cs_site_structure
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="parentId != null" >
+        parentId,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.CsSiteStructure" >
+    update cs_site_structure
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="parentId != null" >
+        parentId = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.CsSiteStructure" >
+    update cs_site_structure
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      parentId = #{parentId,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+<!--获取离岛免税APP首页信息-->
+  <select id="showSiteStructureHome"  resultType="cn.com.ktm.mt.model.sitestructure.response.CsSiteStuctureHomeResponseVo">
+    select ssect.id sectionId,stc.sitestructureId siteStructureId,sst.`name` sitestructureName, sst.type type, stc.linkTabname linkTab,ssect.shopId shopId,ssect.positionTypeId positionTypeId
+    from
+    cs_site_structure sst
+    LEFT JOIN cs_surface_section ssect ON sst.id = ssect.siteStructureId
+    LEFT JOIN cs_surface_section_template st ON st.id = ssect.templateId
+    RIGHT JOIN cs_surface_section_template_config stc ON stc.id = ssect.templateConfigId
+    LEFT JOIN cs_structure_position sp ON sp.id = stc.positionId
+    LEFT JOIN cs_structure_position_type spt ON spt.id = stc.positiontypeId
+    WHERE
+    <if test="list != null and list.size > 0 ">
+      stc.sitestructureId IN
+
+      <foreach collection="list" item="siteStructureId" open="(" separator="," close=")">
+        #{siteStructureId}
+      </foreach>
+    </if>
+	AND ssect.`status` =  1 -- 启用状态
+	AND ssect.templateId = #{templateId}
+    AND ssect.shopId = 1 -- 离岛免税
+    ORDER BY
+	sectionId;
+  </select>
+<!--根据动态表名获取对应表信息-->
+  <select id="findHomeRecommendDto" resultType="cn.com.ktm.mt.model.sitestructure.response.HomePageResponseBody" statementType="STATEMENT">
+   select * from ${tableName}  where sectionId = ${sectionId};
+  </select>
+
+  <!--根据上级id获取信息-->
+  <select id="findInfoByParentId" resultType="cn.com.ktm.mt.model.CsSiteStructure" parameterType="java.lang.Integer" >
+      select
+      <include refid="Base_Column_List" />
+      from cs_site_structure
+      where parentId = #{parentId,jdbcType=INTEGER}
+    </select>
+
+</mapper>

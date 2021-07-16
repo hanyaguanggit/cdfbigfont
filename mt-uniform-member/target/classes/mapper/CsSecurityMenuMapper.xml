@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsSecurityMenuMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.CsSecurityMenu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="parentid" property="parentid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="menutype" property="menutype" jdbcType="INTEGER" />
+    <result column="sequence" property="sequence" jdbcType="INTEGER" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, parentid, name, code, url, menutype, sequence, path, remark, icon
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cs_security_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_security_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.CsSecurityMenu" >
+    insert into cs_security_menu (id, parentid, name, 
+      code, url, menutype, 
+      sequence, path, remark, 
+      icon)
+    values (#{id,jdbcType=INTEGER}, #{parentid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{menutype,jdbcType=INTEGER}, 
+      #{sequence,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.CsSecurityMenu" >
+    insert into cs_security_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="parentid != null" >
+        parentid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="menutype != null" >
+        menutype,
+      </if>
+      <if test="sequence != null" >
+        sequence,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="menutype != null" >
+        #{menutype,jdbcType=INTEGER},
+      </if>
+      <if test="sequence != null" >
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.CsSecurityMenu" >
+    update cs_security_menu
+    <set >
+      <if test="parentid != null" >
+        parentid = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="menutype != null" >
+        menutype = #{menutype,jdbcType=INTEGER},
+      </if>
+      <if test="sequence != null" >
+        sequence = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.CsSecurityMenu" >
+    update cs_security_menu
+    set parentid = #{parentid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      menutype = #{menutype,jdbcType=INTEGER},
+      sequence = #{sequence,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="findMenuByUserId" resultType="cn.com.ktm.mt.model.security.response.LoginResponseBody" parameterType="java.lang.Integer" >
+    SELECT csm.id,csm.parentId,csm.`name`menuName,csm.menuType,csr.id roleId,csr.`name` roleName,csu.id userId,csu.loginName loginName
+    FROM cs_security_user csu
+    LEFT JOIN cs_security_user_role csur ON csu.id = csur.userid
+    LEFT JOIN cs_security_role csr ON csur.roleid = csr.id
+    LEFT JOIN cs_security_role_menu csrm ON csr.id = csrm.roleid
+    LEFT JOIN cs_security_menu csm ON csrm.menuid = csm.id
+    -- WHERE csu.id = 200149
+    where csu.id = #{userId,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsProductMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.CsProduct" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="merchantId" property="merchantId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="nameEN" property="nameEN" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="alias" property="alias" jdbcType="VARCHAR" />
+    <result column="salesUnit" property="salesUnit" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="descriptionEN" property="descriptionEN" jdbcType="VARCHAR" />
+    <result column="categoryId" property="categoryId" jdbcType="INTEGER" />
+    <result column="brandId" property="brandId" jdbcType="INTEGER" />
+    <result column="newProduct" property="newProduct" jdbcType="BIT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="titleEN" property="titleEN" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+    <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+    <result column="lastModifiedUser" property="lastModifiedUser" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="completeStatus" property="completeStatus" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.com.ktm.mt.model.CsProductWithBLOBs" extends="BaseResultMap" >
+    <result column="details" property="details" jdbcType="LONGVARCHAR" />
+    <result column="detailsEN" property="detailsEN" jdbcType="LONGVARCHAR" />
+    <result column="mobileDetails" property="mobileDetails" jdbcType="LONGVARCHAR" />
+    <result column="mobileDetailsEN" property="mobileDetailsEN" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, merchantId, name, nameEN, code, alias, salesUnit, description, descriptionEN, 
+    categoryId, brandId, newProduct, title, titleEN, createTime, creator, lastModifiedTime, 
+    lastModifiedUser, status, tags, completeStatus
+  </sql>
+  <sql id="Blob_Column_List" >
+    details, detailsEN, mobileDetails, mobileDetailsEN
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cs_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.CsProductWithBLOBs" >
+    insert into cs_product (id, merchantId, name, 
+      nameEN, code, alias, 
+      salesUnit, description, descriptionEN, 
+      categoryId, brandId, newProduct, 
+      title, titleEN, createTime, 
+      creator, lastModifiedTime, lastModifiedUser, 
+      status, tags, completeStatus, 
+      details, detailsEN, mobileDetails, 
+      mobileDetailsEN)
+    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{nameEN,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
+      #{salesUnit,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{descriptionEN,jdbcType=VARCHAR}, 
+      #{categoryId,jdbcType=INTEGER}, #{brandId,jdbcType=INTEGER}, #{newProduct,jdbcType=BIT}, 
+      #{title,jdbcType=VARCHAR}, #{titleEN,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=INTEGER}, #{lastModifiedTime,jdbcType=TIMESTAMP}, #{lastModifiedUser,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{tags,jdbcType=VARCHAR}, #{completeStatus,jdbcType=BIT}, 
+      #{details,jdbcType=LONGVARCHAR}, #{detailsEN,jdbcType=LONGVARCHAR}, #{mobileDetails,jdbcType=LONGVARCHAR}, 
+      #{mobileDetailsEN,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.CsProductWithBLOBs" >
+    insert into cs_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="merchantId != null" >
+        merchantId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="nameEN != null" >
+        nameEN,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="alias != null" >
+        alias,
+      </if>
+      <if test="salesUnit != null" >
+        salesUnit,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="descriptionEN != null" >
+        descriptionEN,
+      </if>
+      <if test="categoryId != null" >
+        categoryId,
+      </if>
+      <if test="brandId != null" >
+        brandId,
+      </if>
+      <if test="newProduct != null" >
+        newProduct,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="titleEN != null" >
+        titleEN,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="lastModifiedTime != null" >
+        lastModifiedTime,
+      </if>
+      <if test="lastModifiedUser != null" >
+        lastModifiedUser,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="completeStatus != null" >
+        completeStatus,
+      </if>
+      <if test="details != null" >
+        details,
+      </if>
+      <if test="detailsEN != null" >
+        detailsEN,
+      </if>
+      <if test="mobileDetails != null" >
+        mobileDetails,
+      </if>
+      <if test="mobileDetailsEN != null" >
+        mobileDetailsEN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEN != null" >
+        #{nameEN,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="salesUnit != null" >
+        #{salesUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionEN != null" >
+        #{descriptionEN,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null" >
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="newProduct != null" >
+        #{newProduct,jdbcType=BIT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="titleEN != null" >
+        #{titleEN,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifiedTime != null" >
+        #{lastModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedUser != null" >
+        #{lastModifiedUser,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="completeStatus != null" >
+        #{completeStatus,jdbcType=BIT},
+      </if>
+      <if test="details != null" >
+        #{details,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detailsEN != null" >
+        #{detailsEN,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mobileDetails != null" >
+        #{mobileDetails,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mobileDetailsEN != null" >
+        #{mobileDetailsEN,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.CsProductWithBLOBs" >
+    update cs_product
+    <set >
+      <if test="merchantId != null" >
+        merchantId = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEN != null" >
+        nameEN = #{nameEN,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        alias = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="salesUnit != null" >
+        salesUnit = #{salesUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionEN != null" >
+        descriptionEN = #{descriptionEN,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        categoryId = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null" >
+        brandId = #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="newProduct != null" >
+        newProduct = #{newProduct,jdbcType=BIT},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="titleEN != null" >
+        titleEN = #{titleEN,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifiedTime != null" >
+        lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedUser != null" >
+        lastModifiedUser = #{lastModifiedUser,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="completeStatus != null" >
+        completeStatus = #{completeStatus,jdbcType=BIT},
+      </if>
+      <if test="details != null" >
+        details = #{details,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detailsEN != null" >
+        detailsEN = #{detailsEN,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mobileDetails != null" >
+        mobileDetails = #{mobileDetails,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mobileDetailsEN != null" >
+        mobileDetailsEN = #{mobileDetailsEN,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.com.ktm.mt.model.CsProductWithBLOBs" >
+    update cs_product
+    set merchantId = #{merchantId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      nameEN = #{nameEN,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      alias = #{alias,jdbcType=VARCHAR},
+      salesUnit = #{salesUnit,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      descriptionEN = #{descriptionEN,jdbcType=VARCHAR},
+      categoryId = #{categoryId,jdbcType=INTEGER},
+      brandId = #{brandId,jdbcType=INTEGER},
+      newProduct = #{newProduct,jdbcType=BIT},
+      title = #{title,jdbcType=VARCHAR},
+      titleEN = #{titleEN,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=INTEGER},
+      lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      lastModifiedUser = #{lastModifiedUser,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      tags = #{tags,jdbcType=VARCHAR},
+      completeStatus = #{completeStatus,jdbcType=BIT},
+      details = #{details,jdbcType=LONGVARCHAR},
+      detailsEN = #{detailsEN,jdbcType=LONGVARCHAR},
+      mobileDetails = #{mobileDetails,jdbcType=LONGVARCHAR},
+      mobileDetailsEN = #{mobileDetailsEN,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.CsProduct" >
+    update cs_product
+    set merchantId = #{merchantId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      nameEN = #{nameEN,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      alias = #{alias,jdbcType=VARCHAR},
+      salesUnit = #{salesUnit,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      descriptionEN = #{descriptionEN,jdbcType=VARCHAR},
+      categoryId = #{categoryId,jdbcType=INTEGER},
+      brandId = #{brandId,jdbcType=INTEGER},
+      newProduct = #{newProduct,jdbcType=BIT},
+      title = #{title,jdbcType=VARCHAR},
+      titleEN = #{titleEN,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=INTEGER},
+      lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      lastModifiedUser = #{lastModifiedUser,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      tags = #{tags,jdbcType=VARCHAR},
+      completeStatus = #{completeStatus,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectProductByIds" resultMap="ResultMapWithBLOBs" parameterType="java.util.List" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cs_product
+    where id in
+    <foreach collection="list" index="index" item="item" open="("
+             separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+</mapper>

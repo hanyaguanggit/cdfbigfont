@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsSurfaceRichTextMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.CsSurfaceRichText" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sectionId" property="sectionId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.com.ktm.mt.model.CsSurfaceRichTextWithBLOBs" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="contentEN" property="contentEN" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sectionId
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, contentEN
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cs_surface_richtext
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_surface_richtext
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.CsSurfaceRichTextWithBLOBs" >
+    insert into cs_surface_richtext (id, sectionId, content, 
+      contentEN)
+    values (#{id,jdbcType=INTEGER}, #{sectionId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}, 
+      #{contentEN,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.CsSurfaceRichTextWithBLOBs" useGeneratedKeys="true" keyProperty="id">
+    insert into cs_surface_richtext
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sectionId != null" >
+        sectionId,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="contentEN != null" >
+        contentEN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentEN != null" >
+        #{contentEN,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.CsSurfaceRichTextWithBLOBs" >
+    update cs_surface_richtext
+    <set >
+      <if test="sectionId != null" >
+        sectionId = #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentEN != null" >
+        contentEN = #{contentEN,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.com.ktm.mt.model.CsSurfaceRichTextWithBLOBs" >
+    update cs_surface_richtext
+    set sectionId = #{sectionId,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR},
+      contentEN = #{contentEN,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.CsSurfaceRichText" >
+    update cs_surface_richtext
+    set sectionId = #{sectionId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

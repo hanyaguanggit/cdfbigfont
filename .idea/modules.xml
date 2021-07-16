@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/mt-uniform-api/mt-uniform-api.iml" filepath="$PROJECT_DIR$/mt-uniform-api/mt-uniform-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mt-uniform-eurekaserver/mt-uniform-eurekaserver.iml" filepath="$PROJECT_DIR$/mt-uniform-eurekaserver/mt-uniform-eurekaserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mt-uniform-member/mt-uniform-member.iml" filepath="$PROJECT_DIR$/mt-uniform-member/mt-uniform-member.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mt-uniform-parent.iml" filepath="$PROJECT_DIR$/mt-uniform-parent.iml" />
+    </modules>
+  </component>
+</project>

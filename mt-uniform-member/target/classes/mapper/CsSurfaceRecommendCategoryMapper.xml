@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsSurfaceRecommendCategoryMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.CsSurfaceRecommendCategory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sectionId" property="sectionId" jdbcType="INTEGER" />
+    <result column="categoryIds" property="categoryIds" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sectionId, categoryIds
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cs_surface_recommend_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_surface_recommend_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.CsSurfaceRecommendCategory" >
+    insert into cs_surface_recommend_category (id, sectionId, categoryIds
+      )
+    values (#{id,jdbcType=INTEGER}, #{sectionId,jdbcType=INTEGER}, #{categoryIds,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.CsSurfaceRecommendCategory" >
+    insert into cs_surface_recommend_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sectionId != null" >
+        sectionId,
+      </if>
+      <if test="categoryIds != null" >
+        categoryIds,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryIds != null" >
+        #{categoryIds,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.CsSurfaceRecommendCategory" >
+    update cs_surface_recommend_category
+    <set >
+      <if test="sectionId != null" >
+        sectionId = #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryIds != null" >
+        categoryIds = #{categoryIds,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.CsSurfaceRecommendCategory" >
+    update cs_surface_recommend_category
+    set sectionId = #{sectionId,jdbcType=INTEGER},
+      categoryIds = #{categoryIds,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

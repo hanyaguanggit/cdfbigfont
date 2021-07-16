@@ -1,0 +1,111 @@
+server:
+  port: 8013
+
+# service registry
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://10.0.0.111:8001/eureka/
+
+
+# data source
+spring:
+  datasource:
+    #    type: com.alibaba.druid.pool.DruidDataSource  #连接数据库源的类型
+    #    driver-class-name:  com.mysql.jdbc.Driver #mysql的驱动包
+    #    url:  jdbc:mysql://localhost:3306/ktmcloud?useUnicode=true&characterEncoding=utf-8&autoReconnect=true    #连接数据库的名称
+    #    username: root
+    #    password: root
+    #    dbcp2:
+    #      min-idle:  6  #连接池最小的连接数
+    #      initial-size: 6  #初始化的连接数
+    #      max-idle: 6  #最大连接数
+    #      max-wait-millis: 200  #等待获取最大超时时间
+    url: jdbc:mysql://10.0.0.100:3306/xabwy?useUnicode=true&characterEncoding=UTF-8&relaxAutoCommit=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useAffectedRows=true&useSSL=false
+    username: root
+    password: ktime.com
+    driverClassName: com.mysql.jdbc.Driver
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+
+
+
+redis:
+  # Redis数据库索引（默认为0）
+  DEFAULT_DB_INDEX: 0
+  # Redis服务器地址
+  HOST_IP: 10.0.0.130
+  # Redis服务器连接端口
+  HOST_PORT: 6000
+  # Redis服务器连接密码（默认为空）
+  PASSWORD: ktm.redis
+  # 连接池最大连接数（使用负值表示没有限制）
+  MAX_TOTAL: 8
+  # 连接池最大阻塞等待时间（使用负值表示没有限制）
+  MAX_WAIT_MILLS: -1
+  # 连接池中的最大空闲连接
+  MAX_IDLE: 8
+
+
+
+# mybatis conf
+mybatis:
+  #config-location:  classpath:mybatis/mybatis.cfg.xml   #mybatis配置文件的路径加载
+  type-aliases-package: cn.com.ktm.mt.model.entity  #加载所有实体类的路径
+  mapper-locations:
+    - classpath:/mapper/**/*.xml   #映射mapper所有的文件
+  configuration:
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+    default-fetch-size: 100
+    default-statement-timeout: 30
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 9000
+
+hystrix:
+  #  threadpool:
+  #    default:
+  #      coreSize: 1000 ##并发执行的最大线程数，默认10
+  #      maxQueueSize: 1000 ##BlockingQueue的最大队列数
+  #      queueSizeRejectionThreshold: 500 ##即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+mapper:
+  notEmpty: true
+
+logging:
+  config: classpath:log4j2.yml
+
+
+tx-lcn:
+  client:
+    manager-address:127.0.0.1:8070
+

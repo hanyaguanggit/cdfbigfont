@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.ktm.mt.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.entity.UserEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="uname" property="uname" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="userType" property="userType" jdbcType="INTEGER" />
+        <result column="organizationId" property="organizationId" jdbcType="BIGINT" />
+        <result column="certificateType" property="certificateType" jdbcType="INTEGER" />
+        <result column="certificateNo" property="certificateNo" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="onlineStatus" property="onlineStatus" jdbcType="INTEGER" />
+        <result column="createUser" property="createUser" jdbcType="BIGINT" />
+        <result column="createTime" property="createTime" jdbcType="BIGINT" />
+        <result column="updateUser" property="updateUser" jdbcType="BIGINT" />
+        <result column="updateTime" property="updateTime" jdbcType="BIGINT" />
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+        <result column="agent" property="agent" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="isBind" property="isBind" jdbcType="INTEGER" />
+        <result column="openId" property="openId" jdbcType="VARCHAR" />
+        <result column="alipayUserId" property="alipayUserId" jdbcType="VARCHAR" />
+        <result column="bindTime" property="bindTime" jdbcType="BIGINT" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, uname, password, userType, organizationId, certificateType, certificateNo, phone,
+        onlineStatus, createUser, createTime, updateUser, updateTime, ip, agent, status,
+        isDelete, email, isBind, openId, bindTime, alipayUserId
+    </sql>
+    <insert id="insertSelective">
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+            SELECT
+            LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_user
+        (uname, password, userType, organizationId, certificateType, certificateNo, phone,
+        createUser, createTime, updateUser, updateTime, ip, agent,
+        email, isBind, openId, bindTime)
+        VALUES (
+        #{uname},
+        #{password},
+        #{userType},
+        #{organizationId},
+        #{certificateType},
+        #{certificateNo},
+        #{phone},
+        #{createUser},
+        #{createTime},
+        #{updateUser},
+        #{updateTime},
+        #{ip},
+        #{agent},
+        #{email},
+        #{isBind},
+        #{openId},
+        #{bindTime}
+        )
+    </insert>
+    <select id="findUserById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        t_user
+        where id = #{id}
+    </select>
+    <select id="findUserByPhone" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        t_user
+        where phone = #{phone} and status = 1 limit 1 ;
+    </select>
+    <select id="findUserByPhoneAndUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        t_user
+        where phone = #{phone} and id = #{id} and status = 1 and isDelete = 0;
+    </select>
+
+
+
+</mapper>

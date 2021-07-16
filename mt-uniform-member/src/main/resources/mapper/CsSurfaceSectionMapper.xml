@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsSurfaceSectionMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.CsSurfaceSection" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="templateId" property="templateId" jdbcType="INTEGER" />
+    <result column="templateConfigId" property="templateConfigId" jdbcType="INTEGER" />
+    <result column="siteStructureId" property="siteStructureId" jdbcType="INTEGER" />
+    <result column="positionId" property="positionId" jdbcType="INTEGER" />
+    <result column="positionTypeId" property="positionTypeId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="advertiser" property="advertiser" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="target" property="target" jdbcType="BIT" />
+    <result column="fromTime" property="fromTime" jdbcType="TIMESTAMP" />
+    <result column="thruTime" property="thruTime" jdbcType="TIMESTAMP" />
+    <result column="sequence" property="sequence" jdbcType="SMALLINT" />
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="lastModifiedUser" property="lastModifiedUser" jdbcType="INTEGER" />
+    <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+    <result column="isPreload" property="isPreload" jdbcType="BIT" />
+    <result column="virtualCategorys" property="virtualCategorys" jdbcType="VARCHAR" />
+    <result column="shopId" property="shopId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.com.ktm.mt.model.CsSurfaceSection" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, templateId, templateConfigId, siteStructureId, positionId, positionTypeId, name, 
+    advertiser, status, target, fromTime, thruTime, sequence, creator, createTime, lastModifiedUser, 
+    lastModifiedTime, isPreload, virtualCategorys, shopId
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cs_surface_section
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_surface_section
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.CsSurfaceSection" >
+    insert into cs_surface_section (id, templateId, templateConfigId, 
+      siteStructureId, positionId, positionTypeId, 
+      name, advertiser, status, 
+      target, fromTime, thruTime, 
+      sequence, creator, createTime, 
+      lastModifiedUser, lastModifiedTime, isPreload, 
+      virtualCategorys, shopId, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{templateId,jdbcType=INTEGER}, #{templateConfigId,jdbcType=INTEGER}, 
+      #{siteStructureId,jdbcType=INTEGER}, #{positionId,jdbcType=INTEGER}, #{positionTypeId,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{advertiser,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{target,jdbcType=BIT}, #{fromTime,jdbcType=TIMESTAMP}, #{thruTime,jdbcType=TIMESTAMP}, 
+      #{sequence,jdbcType=SMALLINT}, #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastModifiedUser,jdbcType=INTEGER}, #{lastModifiedTime,jdbcType=TIMESTAMP}, #{isPreload,jdbcType=BIT}, 
+      #{virtualCategorys,jdbcType=VARCHAR}, #{shopId,jdbcType=INTEGER}, #{remark,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.CsSurfaceSection" useGeneratedKeys="true" keyProperty="id">
+    insert into cs_surface_section
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="templateId != null" >
+        templateId,
+      </if>
+      <if test="templateConfigId != null" >
+        templateConfigId,
+      </if>
+      <if test="siteStructureId != null" >
+        siteStructureId,
+      </if>
+      <if test="positionId != null" >
+        positionId,
+      </if>
+      <if test="positionTypeId != null" >
+        positionTypeId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="advertiser != null" >
+        advertiser,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="target != null" >
+        target,
+      </if>
+      <if test="fromTime != null" >
+        fromTime,
+      </if>
+      <if test="thruTime != null" >
+        thruTime,
+      </if>
+      <if test="sequence != null" >
+        sequence,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="lastModifiedUser != null" >
+        lastModifiedUser,
+      </if>
+      <if test="lastModifiedTime != null" >
+        lastModifiedTime,
+      </if>
+      <if test="isPreload != null" >
+        isPreload,
+      </if>
+      <if test="virtualCategorys != null" >
+        virtualCategorys,
+      </if>
+      <if test="shopId != null" >
+        shopId,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="templateId != null" >
+        #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="templateConfigId != null" >
+        #{templateConfigId,jdbcType=INTEGER},
+      </if>
+      <if test="siteStructureId != null" >
+        #{siteStructureId,jdbcType=INTEGER},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="positionTypeId != null" >
+        #{positionTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="advertiser != null" >
+        #{advertiser,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=BIT},
+      </if>
+      <if test="fromTime != null" >
+        #{fromTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thruTime != null" >
+        #{thruTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sequence != null" >
+        #{sequence,jdbcType=SMALLINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedUser != null" >
+        #{lastModifiedUser,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifiedTime != null" >
+        #{lastModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPreload != null" >
+        #{isPreload,jdbcType=BIT},
+      </if>
+      <if test="virtualCategorys != null" >
+        #{virtualCategorys,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.CsSurfaceSection" >
+    update cs_surface_section
+    <set >
+      <if test="templateId != null" >
+        templateId = #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="templateConfigId != null" >
+        templateConfigId = #{templateConfigId,jdbcType=INTEGER},
+      </if>
+      <if test="siteStructureId != null" >
+        siteStructureId = #{siteStructureId,jdbcType=INTEGER},
+      </if>
+      <if test="positionId != null" >
+        positionId = #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="positionTypeId != null" >
+        positionTypeId = #{positionTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="advertiser != null" >
+        advertiser = #{advertiser,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="target != null" >
+        target = #{target,jdbcType=BIT},
+      </if>
+      <if test="fromTime != null" >
+        fromTime = #{fromTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thruTime != null" >
+        thruTime = #{thruTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sequence != null" >
+        sequence = #{sequence,jdbcType=SMALLINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedUser != null" >
+        lastModifiedUser = #{lastModifiedUser,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifiedTime != null" >
+        lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPreload != null" >
+        isPreload = #{isPreload,jdbcType=BIT},
+      </if>
+      <if test="virtualCategorys != null" >
+        virtualCategorys = #{virtualCategorys,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        shopId = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.com.ktm.mt.model.CsSurfaceSection" >
+    update cs_surface_section
+    set templateId = #{templateId,jdbcType=INTEGER},
+      templateConfigId = #{templateConfigId,jdbcType=INTEGER},
+      siteStructureId = #{siteStructureId,jdbcType=INTEGER},
+      positionId = #{positionId,jdbcType=INTEGER},
+      positionTypeId = #{positionTypeId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      advertiser = #{advertiser,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      target = #{target,jdbcType=BIT},
+      fromTime = #{fromTime,jdbcType=TIMESTAMP},
+      thruTime = #{thruTime,jdbcType=TIMESTAMP},
+      sequence = #{sequence,jdbcType=SMALLINT},
+      creator = #{creator,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      lastModifiedUser = #{lastModifiedUser,jdbcType=INTEGER},
+      lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      isPreload = #{isPreload,jdbcType=BIT},
+      virtualCategorys = #{virtualCategorys,jdbcType=VARCHAR},
+      shopId = #{shopId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.CsSurfaceSection" >
+    update cs_surface_section
+    set templateId = #{templateId,jdbcType=INTEGER},
+      templateConfigId = #{templateConfigId,jdbcType=INTEGER},
+      siteStructureId = #{siteStructureId,jdbcType=INTEGER},
+      positionId = #{positionId,jdbcType=INTEGER},
+      positionTypeId = #{positionTypeId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      advertiser = #{advertiser,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      target = #{target,jdbcType=BIT},
+      fromTime = #{fromTime,jdbcType=TIMESTAMP},
+      thruTime = #{thruTime,jdbcType=TIMESTAMP},
+      sequence = #{sequence,jdbcType=SMALLINT},
+      creator = #{creator,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      lastModifiedUser = #{lastModifiedUser,jdbcType=INTEGER},
+      lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      isPreload = #{isPreload,jdbcType=BIT},
+      virtualCategorys = #{virtualCategorys,jdbcType=VARCHAR},
+      shopId = #{shopId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
