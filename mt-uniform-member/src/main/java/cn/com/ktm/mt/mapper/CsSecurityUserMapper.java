@@ -1,7 +1,6 @@
 package cn.com.ktm.mt.mapper;
 
 import cn.com.ktm.mt.model.CsSecurityUser;
-import cn.com.ktm.mt.model.security.request.LoginRequestVo;
 import org.apache.ibatis.annotations.Param;
 
 public interface CsSecurityUserMapper {

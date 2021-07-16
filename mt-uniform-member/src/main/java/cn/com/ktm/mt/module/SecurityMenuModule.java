@@ -4,7 +4,7 @@ import cn.com.ktm.mt.model.CsSecurityUser;
 import cn.com.ktm.mt.model.constant.ResponseConsts;
 import cn.com.ktm.mt.model.exception.Assert;
 import cn.com.ktm.mt.model.message.OtaResponse;
-import cn.com.ktm.mt.model.security.request.LoginRequestVo;
+import cn.com.ktm.mt.model.security.request.LoginRequestVoBody;
 import cn.com.ktm.mt.model.security.response.LoginResponse;
 import cn.com.ktm.mt.model.security.response.LoginResponseBody;
 import cn.com.ktm.mt.model.util.utils.security.AesUtils;
@@ -24,14 +24,14 @@ import java.util.*;
 @Component
 public class SecurityMenuModule {
 
-    Logger logger = LoggerFactory.getLogger(MemberModule.class);
+    Logger logger = LoggerFactory.getLogger(CsSecurityUserModule.class);
     @Autowired
     private SecurityMenuService securityMenuService;
 
     @Autowired
     private CsSecurityUserService csSecurityUserService;
 
-    public OtaResponse findMenuByUserId(LoginRequestVo request)  {
+    public OtaResponse findMenuByUserId(LoginRequestVoBody request)  {
         Assert.notBlank(request.getUserName(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, " 用户名为空");
         Assert.notBlank(request.getPassword(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "密码为空");
         //先通过用户名和密码查询到用户id，再查询其拥有的菜单权限。

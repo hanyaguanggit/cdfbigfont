@@ -1,71 +1,72 @@
 package cn.com.ktm.mt.module;
 
-import cn.com.ktm.mt.service.OrganizationService;
+import cn.com.ktm.mt.model.constant.ResponseConsts;
+import cn.com.ktm.mt.model.exception.Assert;
+import cn.com.ktm.mt.model.message.member.personallogin.response.PersonalLoginResponse;
+import cn.com.ktm.mt.model.message.member.personallogin.response.PersonalLoginResponseBody;
+import cn.com.ktm.mt.model.redis.RedisCache;
+import cn.com.ktm.mt.model.security.request.LoginRequestVo;
+import cn.com.ktm.mt.model.security.request.LoginRequestVoBody;
+import cn.com.ktm.mt.model.util.utils.ValidUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * hyg 2021.07.16
+ * 后台管理员相关
+ */
 @Component
-public class MemberModule {
-    Logger logger = LoggerFactory.getLogger(MemberModule.class);
+public class CsSecurityUserModule {
+    Logger logger = LoggerFactory.getLogger(CsSecurityUserModule.class);
 
  /*   @Autowired
     private UserService UserService;*/
 
-    @Autowired
-    private OrganizationService organizationService;
-    
 
-
-  /*  public PersonalLoginResponse personalLogin(PersonalLoginRequest request) {
-        Assert.notBlank(request.getPartnerId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID为空");
-        Assert.notNull(request.getChannelId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "渠道来源为空");
+    /**
+     * 后台登录
+     * @param request
+     * @return
+     */
+    public PersonalLoginResponse personalLogin(LoginRequestVo request) {
+       /* Assert.notBlank(request.getPartnerId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID为空");
+        Assert.notNull(request.getChannelId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "渠道来源为空");*/
         request.getBody().valid();
-
-        PartnerEntity partner = partnerApi.findPartner(request.getPartnerId());
-        Assert.notNull(partner,ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID错误");
-        Assert.isTrue(request.getChannelId() > 0 && request.getChannelId() <= MTChannelEnum.values().length, ResponseConsts.MEMBER_PARAM_ERROR,"渠道来源错误");
-        Assert.isTrue(ValidUtil.isMobile(request.getBody().getPhone()), ResponseConsts.MEMBER_PHONE_ERROR, "手机号输入错误");
-        Assert.isTrue(request.getBody().getUserType() == MTUserTypeEnum.PERSONAL.getValue(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "用户类型错误");
-        if (!request.getBody().getValidCode().equalsIgnoreCase(RedisCache.db().get(request.getBody().getValidToken()))) {
+        //Assert.isTrue(ValidUtil.isMobile(request.getBody().getPhone()), ResponseConsts.MEMBER_PHONE_ERROR, "手机号输入错误");
+       /* Assert.isTrue(request.getBody().getUserType() == MTUserTypeEnum.PERSONAL.getValue(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "用户类型错误");*/
+        if (!request.getBody().getValidCode().equalsIgnoreCase(RedisCache.db().get(request.getBody().getValidCode()))) {
             Assert.fail(ResponseConsts.MEMBER_VALIDCODE_ERROR, "图形验证码校验失败");
         }
-        RedisCache.db().del(request.getBody().getValidToken());
-
-        //Assert.eq(request.getBody().getSmsCode(),RedisCache.db().get(MTSourceEnum.PERSONAL_REGISTER.getValue()+request.getBody().getPhone()),ResponseConsts.MEMBER_SMSCODE_ERROR,"短信验证码相关验证失败");
-        Assert.eq(request.getBody().getSmsCode(),RedisCache.db().get(MTSourceEnum.PERSONAL_REGISTER.getValue()+request.getBody().getPhone()),ResponseConsts.MEMBER_SMSCODE_ERROR,"短信验证码相关验证失败");
-        RedisCache.db().del(MTSourceEnum.PERSONAL_REGISTER.getValue()+request.getBody().getPhone());
+        RedisCache.db().del(request.getBody().getValidCode());
 
         PersonalLoginResponse response = new PersonalLoginResponse();
         PersonalLoginResponseBody responseBody = new PersonalLoginResponseBody();
 
-
         try {
-            UserEntity userEntity = UserService.findUserByPhone(request.getBody().getPhone());
+            //TODO??? 待补充
+           /* CsMember csMember = UserService.findUserByPhone(request.getBody().getPhone());
             if (ObjectUtils.allNotNull(userEntity)) {
-
                 responseBody.setUserId(String.valueOf(userEntity.getId()));
                 responseBody.setPhone(userEntity.getPhone());
                 responseBody.setUserType(userEntity.getUserType());
-
                 response.setBody(responseBody);
 
             } else {
-                UserEntity entity = request.getBody().transform(request);
+               *//* UserEntity entity = request.getBody().transform(request);
                 UserEntity userEntity1 = UserService.personalLogin(entity);
                 responseBody.setUserId(String.valueOf(userEntity1.getId()));
                 responseBody.setPhone(userEntity1.getPhone());
-                responseBody.setUserType(userEntity1.getUserType());
+                responseBody.setUserType(userEntity1.getUserType());*//**//*
 
-                response.setBody(responseBody);
+                response.setBody(responseBody);*//*
 
             }
             response.setCode(ResponseConsts.SUCCESS);
             response.setDescribe("success");
             response.setPartnerId(request.getPartnerId());
             response.setChannelId(request.getChannelId());
-
+*/
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail(ResponseConsts.MEMBER_SYSTEM_EXCEPTION);
@@ -73,10 +74,10 @@ public class MemberModule {
         }
 
         return response;
-    }*/
+    }
 
     /**
-     * 团队注册
+     * 注册
      * @param request
      * @return
      */
@@ -243,7 +244,7 @@ public class MemberModule {
     }
 
     *//**
-     * 1.6 忘记密码(团体重置密码请求)
+     * 1.6 忘记密码(重置密码请求)
      * @param request
      * @return
      *//*

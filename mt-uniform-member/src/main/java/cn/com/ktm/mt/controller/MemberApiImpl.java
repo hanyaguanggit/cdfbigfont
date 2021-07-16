@@ -1,13 +1,12 @@
 package cn.com.ktm.mt.controller;
 
-import cn.com.ktm.mt.model.entity.OrganizationEntity;
+import cn.com.ktm.mt.model.member.sendsmscode.request.SendSmsVeriﬁcationCodeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import cn.com.ktm.mt.model.exception.AssertError;
 import cn.com.ktm.mt.model.message.OtaResponse;
-import cn.com.ktm.mt.model.message.member.groupLogin.request.GroupLoginRequest;
 import cn.com.ktm.mt.model.message.member.validcode.request.ValidCodeRequest;
-import cn.com.ktm.mt.module.MemberModule;
+import cn.com.ktm.mt.module.CsSecurityUserModule;
 import cn.com.ktm.mt.module.SmsCodeModule;
 import cn.com.ktm.mt.module.ValidCodeModule;
 import lombok.extern.log4j.Log4j;
@@ -20,7 +19,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class MemberApiImpl {
     @Autowired
-    private MemberModule memberModule;
+    private CsSecurityUserModule csSecurityUserModule;
 
     @Autowired
     private ValidCodeModule validCodeModule;
@@ -108,7 +107,7 @@ public class MemberApiImpl {
         return process;
     }*/
 
-   /* @PostMapping(path = "/smsCode", consumes = "application/json")
+    @PostMapping(path = "/smsCode", consumes = "application/json")
     public OtaResponse SendSmsCode(@RequestBody SendSmsVeriﬁcationCodeRequest request) {
 
         OtaResponse process;
@@ -119,7 +118,7 @@ public class MemberApiImpl {
             process = OtaResponse.fail(e.getErrorCode().getCode(), e.getMessage(), request.getPartnerId(), request.getChannelId());
         }
         return process;
-    }*/
+    }
 
 
 

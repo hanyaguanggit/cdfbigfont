@@ -29,7 +29,7 @@ public class CsSiteStructureModule {
     @Autowired
     private CsProductService csProductService;
 
-    Logger logger = LoggerFactory.getLogger(MemberModule.class);
+    Logger logger = LoggerFactory.getLogger(CsSecurityUserModule.class);
 
     public OtaResponse getInfo(CsSiteStuctureRequest request) {
         Assert.notNull(request.getId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, " id为空");

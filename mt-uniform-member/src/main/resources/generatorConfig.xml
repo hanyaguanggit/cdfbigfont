@@ -25,23 +25,23 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="cn.com.ktm.mt.model"
-                            targetProject="D:\workspace\mt-uniform-parent\mt-uniform-member\src\main\java">
+        <javaModelGenerator targetPackage="cn.com.ktm.mt.model.bean"
+                            targetProject="D:\workspace\cdf-big-front\cdfbigfont\mt-uniform-api\src\main\java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="mapper"
-                         targetProject="D:\workspace\mt-uniform-parent\mt-uniform-member\src\main\resources">
+                         targetProject="D:\workspace\cdf-big-front\cdfbigfont\mt-uniform-member\src\main\resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="cn.com.ktm.mt.mapper"
-                             targetProject="D:\workspace\mt-uniform-parent\mt-uniform-member\src\main\java">
+                             targetProject="D:\workspace\cdf-big-front\cdfbigfont\mt-uniform-member\src\main\java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="cs_surface_search_hot_words" tableName="cs_surface_search_hot_words" domainObjectName="CsSurfaceSearchHotWords" enableCountByExample="false"
+        <table schema="cs_member" tableName="cs_member" domainObjectName="CsMember" enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
         <property name="useActualColumnNames" value="true" />

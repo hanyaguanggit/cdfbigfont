@@ -3,9 +3,8 @@ package cn.com.ktm.mt.controller;
 import cn.com.ktm.mt.model.exception.AssertError;
 import cn.com.ktm.mt.model.message.OtaResponse;
 import cn.com.ktm.mt.model.section.request.CsSurfaceSectionRequest;
-import cn.com.ktm.mt.model.security.request.LoginRequestVo;
 import cn.com.ktm.mt.module.CsSurfaceSectionModule;
-import cn.com.ktm.mt.module.MemberModule;
+import cn.com.ktm.mt.module.CsSecurityUserModule;
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,7 @@ public class CsSurfaceSectionController {
     @Autowired
     private CsSurfaceSectionModule csSurfaceSectionModule;
 
-    Logger logger = LoggerFactory.getLogger(MemberModule.class);
+    Logger logger = LoggerFactory.getLogger(CsSecurityUserModule.class);
 
     @PostMapping(value = "/section/add", consumes = "application/json")
     public OtaResponse findMenuByUserId(@RequestBody CsSurfaceSectionRequest request) {

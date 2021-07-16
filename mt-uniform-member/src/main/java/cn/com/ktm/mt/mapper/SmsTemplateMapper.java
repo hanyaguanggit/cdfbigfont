@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author yuanpeng
- * @
+ *
  */
 @Repository
 public interface SmsTemplateMapper {
