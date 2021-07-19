@@ -1,16 +1,29 @@
 package cn.com.ktm.mt.module;
 
+import cn.com.ktm.mt.model.CsSecurityUser;
 import cn.com.ktm.mt.model.constant.ResponseConsts;
 import cn.com.ktm.mt.model.exception.Assert;
+import cn.com.ktm.mt.model.message.OtaResponse;
 import cn.com.ktm.mt.model.message.member.personallogin.response.PersonalLoginResponse;
-import cn.com.ktm.mt.model.message.member.personallogin.response.PersonalLoginResponseBody;
+import cn.com.ktm.mt.model.message.member.resetpassword.request.ResetPasswordRequest;
+import cn.com.ktm.mt.model.message.member.resetpassword.response.ResetPasswordResponse;
+import cn.com.ktm.mt.model.message.member.resetpassword.response.ResetPasswordResponseBody;
 import cn.com.ktm.mt.model.redis.RedisCache;
 import cn.com.ktm.mt.model.security.request.LoginRequestVo;
-import cn.com.ktm.mt.model.security.request.LoginRequestVoBody;
+import cn.com.ktm.mt.model.security.response.LoginResponse;
+import cn.com.ktm.mt.model.security.response.LoginResponseBody;
 import cn.com.ktm.mt.model.util.utils.ValidUtil;
+import cn.com.ktm.mt.model.util.utils.security.AesUtils;
+import cn.com.ktm.mt.service.CsSecurityUserService;
+import cn.com.ktm.mt.service.SecurityMenuService;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * hyg 2021.07.16
@@ -20,115 +33,61 @@ import org.springframework.stereotype.Component;
 public class CsSecurityUserModule {
     Logger logger = LoggerFactory.getLogger(CsSecurityUserModule.class);
 
- /*   @Autowired
-    private UserService UserService;*/
+    @Autowired
+    private CsSecurityUserService csSecurityUserService;
 
+    @Autowired
+    private SecurityMenuService securityMenuService;
 
     /**
      * 后台登录
      * @param request
      * @return
      */
-    public PersonalLoginResponse personalLogin(LoginRequestVo request) {
+    public LoginResponse adminLogin(LoginRequestVo request) {
        /* Assert.notBlank(request.getPartnerId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID为空");
         Assert.notNull(request.getChannelId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "渠道来源为空");*/
         request.getBody().valid();
-        //Assert.isTrue(ValidUtil.isMobile(request.getBody().getPhone()), ResponseConsts.MEMBER_PHONE_ERROR, "手机号输入错误");
-       /* Assert.isTrue(request.getBody().getUserType() == MTUserTypeEnum.PERSONAL.getValue(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "用户类型错误");*/
         if (!request.getBody().getValidCode().equalsIgnoreCase(RedisCache.db().get(request.getBody().getValidCode()))) {
-            Assert.fail(ResponseConsts.MEMBER_VALIDCODE_ERROR, "图形验证码校验失败");
+           // Assert.fail(ResponseConsts.MEMBER_VALIDCODE_ERROR, "图形验证码校验失败");
         }
-        RedisCache.db().del(request.getBody().getValidCode());
+        //RedisCache.db().del(request.getBody().getValidCode());
 
-        PersonalLoginResponse response = new PersonalLoginResponse();
-        PersonalLoginResponseBody responseBody = new PersonalLoginResponseBody();
-
+        //先通过用户名和密码查询到用户id，再查询其拥有的菜单权限。
+        LoginResponse response = new LoginResponse();
         try {
-            //TODO??? 待补充
-           /* CsMember csMember = UserService.findUserByPhone(request.getBody().getPhone());
-            if (ObjectUtils.allNotNull(userEntity)) {
-                responseBody.setUserId(String.valueOf(userEntity.getId()));
-                responseBody.setPhone(userEntity.getPhone());
-                responseBody.setUserType(userEntity.getUserType());
-                response.setBody(responseBody);
-
-            } else {
-               *//* UserEntity entity = request.getBody().transform(request);
-                UserEntity userEntity1 = UserService.personalLogin(entity);
-                responseBody.setUserId(String.valueOf(userEntity1.getId()));
-                responseBody.setPhone(userEntity1.getPhone());
-                responseBody.setUserType(userEntity1.getUserType());*//**//*
-
-                response.setBody(responseBody);*//*
-
+            String pass = AesUtils.encrypt("",request.getBody().getPassword());
+            logger.info("解密的字符串:{}",pass);
+            CsSecurityUser csSecurityUser = csSecurityUserService.selectByLoginNameAndPassword(request.getBody().getUserName(),pass);
+            if(csSecurityUser != null){
+                //TODO：是否验证后台用户失效日期
+                if(csSecurityUser.getLocked()){
+                    response.setDescribe("此用户已被锁定，请联系管理员。");
+                }
+                //登录成功
+                response.setCsSecurityUser(csSecurityUser);
+                //获取权限菜单
+                List<LoginResponseBody> menuList = securityMenuService.findMenuByUserId(csSecurityUser.getId());
+                if(menuList != null && menuList.size() > 0){
+                    logger.info("所拥有的菜单:{}",menuList);
+                    response.setMenuList(menuList);
+                    response.setCode(ResponseConsts.SUCCESS);
+                    response.setDescribe("登录成功。");
+                }else{
+                    response.setCode(ResponseConsts.SUCCESS);
+                    response.setDescribe("此人无任何权限！");
+                }
+            }else{
+                response.setCode(ResponseConsts.SUCCESS);
+                response.setDescribe("查无此人!");
             }
-            response.setCode(ResponseConsts.SUCCESS);
-            response.setDescribe("success");
-            response.setPartnerId(request.getPartnerId());
-            response.setChannelId(request.getChannelId());
-*/
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail(ResponseConsts.MEMBER_SYSTEM_EXCEPTION);
-
         }
-
         return response;
     }
 
-    /**
-     * 注册
-     * @param request
-     * @return
-     */
-   /* public GroupRegisterResponse groupRegister(GroupRegisterRequest request) {
-        Assert.notBlank(request.getPartnerId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID为空");
-        Assert.notNull(request.getChannelId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "渠道来源为空");
-        request.getBody().valid();
-        PartnerEntity partner = partnerApi.findPartner(request.getPartnerId());
-        Assert.notNull(partner,ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID错误");
-        Assert.isTrue(request.getChannelId() > 0 && request.getChannelId() <= MTChannelEnum.values().length, ResponseConsts.MEMBER_PARAM_ERROR,"渠道来源错误");
-        Assert.isTrue(ValidUtil.uniformSocialCreditCodeValidate(request.getBody().getOrgCode()), ResponseConsts.MEMBER_AUDIT_INFORMATION_ERROR, "组织机构代码错误");
-        Assert.isTrue(ValidUtil.isMobile(request.getBody().getPhone()), ResponseConsts.MEMBER_PHONE_ERROR);
-        Assert.isTrue(request.getBody().getUserType() == MTUserTypeEnum.TOUR_GROUP.getValue() || request.getBody().getUserType() == MTUserTypeEnum.SPECIAL_GROUP.getValue(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "⽤户类型错误");
-        Assert.isTrue(ValidUtil.isRightPwd(request.getBody().getPassword()),ResponseConsts.MEMBER_PARAM_CONTACT_ERROR,"密码必须由6至16位数字和字母组成");
-        if (!request.getBody().getValidCode().equalsIgnoreCase(RedisCache.db().get(request.getBody().getValidToken()))) {
-            Assert.fail(ResponseConsts.MEMBER_VALIDCODE_ERROR, "图形验证码校验失败");
-        }
-       if (request.getBody().getUserType() == MTUserTypeEnum.TOUR_GROUP.getValue()) {
-            Assert.isTrue(ValidUtil.checkEmail(request.getBody().getEmail()), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "邮箱格式错误");
-        }
-        //Assert.eq(request.getBody().getSmsCode(),RedisCache.db().get(MTSourceEnum.PERSONAL_REGISTER.getValue()+request.getBody().getPhone()),ResponseConsts.MEMBER_SMSCODE_ERROR,"短信验证码相关验证失败");
-        Assert.eq(request.getBody().getSmsCode(),RedisCache.db().get(MTSourceEnum.GROUP_REGISTER.getValue()+request.getBody().getPhone()),ResponseConsts.MEMBER_SMSCODE_ERROR,"短信验证码相关验证失败");
-        RedisCache.db().del(MTSourceEnum.GROUP_REGISTER.getValue()+request.getBody().getPhone());
-
-        Assert.isNull(organizationService.findGroupByOrgCode(request.getBody().getOrgCode()), ResponseConsts.MEMBER_ACCOUNT_IS_EXIST, "账号已被注册");
-
-        OrganizationEntity entity = request.getBody().transform(request);
-        GroupRegisterResponse response = new GroupRegisterResponse();
-        GroupRegisterResponseBody responseBody = new GroupRegisterResponseBody();
-
-        try {
-            OrganizationEntity organization = organizationService.groupRegister(entity);
-
-            responseBody.setAuditStatus(organization.getAuditStatus());
-            responseBody.setUserType(organization.getType());
-            responseBody.setUserId(String.valueOf(organization.getId()));
-            responseBody.setOrgCode(organization.getOrgCode());
-            responseBody.setStatus(organization.getStatus());
-            response.setBody(responseBody);
-            response.setCode(ResponseConsts.SUCCESS);
-            response.setDescribe("success");
-            response.setPartnerId(request.getPartnerId());
-            response.setChannelId(request.getChannelId());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(ResponseConsts.MEMBER_SYSTEM_EXCEPTION);
-        }
-
-        return response;
-    }*/
 
 /*    public GroupLoginResponse groupLogin(GroupLoginRequest request) {
         Assert.notNull(request.getChannelId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, " 渠道来源为空");
@@ -243,59 +202,46 @@ public class CsSecurityUserModule {
         return response;
     }
 
-    *//**
+    /**
      * 1.6 忘记密码(重置密码请求)
      * @param request
      * @return
-     *//*
-    public OtaResponse resetPassword(ResetPasswordRequest request) {
-        Assert.notBlank(request.getPartnerId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID为空");
-        Assert.notNull(request.getChannelId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "渠道来源为空");
+     */
+    public ResetPasswordResponse resetPassword(ResetPasswordRequest request) {
+       /* Assert.notBlank(request.getPartnerId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID为空");
+        Assert.notNull(request.getChannelId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "渠道来源为空");*/
         request.getBody().valid();
-        PartnerEntity partner = partnerApi.findPartner(request.getPartnerId());
-        Assert.notNull(partner,ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID错误");
-        Assert.isTrue(request.getChannelId() > 0 && request.getChannelId() <= MTChannelEnum.values().length, ResponseConsts.MEMBER_PARAM_ERROR,"渠道来源错误");
-        Assert.isTrue(request.getBody().getUserType() == MTUserTypeEnum.TOUR_GROUP.getValue() || request.getBody().getUserType() == MTUserTypeEnum.SPECIAL_GROUP.getValue(), ResponseConsts.MEMBER_PARAM_ERROR, "⽤户类型错误");
-        Assert.isTrue(ValidUtil.isRightPwd(request.getBody().getPassword()),ResponseConsts.MEMBER_PARAM_CONTACT_ERROR,"密码必须由6至11位特殊字符、数字、大写字母和小写字母组成");
-        Assert.isTrue(ValidUtil.uniformSocialCreditCodeValidate(request.getBody().getOrgCode()), ResponseConsts.MEMBER_PARAM_ERROR, "组织机构代码输入有误");
-        if (!request.getBody().getValidCode().equalsIgnoreCase(RedisCache.db().get(request.getBody().getValidToken()))) {
-            Assert.fail(ResponseConsts.MEMBER_VALIDCODE_ERROR, "图形验证码校验失败");
-        }
-
-
-        OrganizationEntity organization = organizationService.findGroupByOrgCodeAndUserType(request.getBody().getOrgCode(), request.getBody().getUserType());
-
-        Assert.notNull(organization, ResponseConsts.MEMBER_USERINFO_NOT_EXIST, "⽆效⽤户");
-        String redisKey="forget_password";//团队注册
-        Assert.eq(request.getBody().getSmsCode(),RedisCache.db().get(MTSourceEnum.RESET_PASSWORD.getValue()+organization.getPhone()),ResponseConsts.MEMBER_SMSCODE_ERROR,"短信验证码相关验证失败");
-        RedisCache.db().del(MTSourceEnum.RESET_PASSWORD.getValue()+organization.getPhone());
+        //Assert.isTrue(ValidUtil.isRightPwd(request.getBody().getOldPassword()),ResponseConsts.MEMBER_PARAM_CONTACT_ERROR,"当前密码必须由6至11位特殊字符、数字、大写字母和小写字母组成");
+        Assert.isTrue(ValidUtil.isRightPwd(request.getBody().getNewPassword()),ResponseConsts.MEMBER_PARAM_CONTACT_ERROR,"新密码必须由6至11位特殊字符、数字、大写字母和小写字母组成");
         ResetPasswordResponse response = new ResetPasswordResponse();
         ResetPasswordResponseBody responseBody = new ResetPasswordResponseBody();
-
+        String oldpass="",newpass="" ;
         try {
-            organization.setPassword(MD5Util.strToMD5(request.getBody().getPassword()));
-
-            organizationService.updateOrganizationById(organization);
-
-            responseBody.setOrgCode(organization.getOrgCode());
-            responseBody.setUserType(organization.getType());
-            response.setBody(responseBody);
-            response.setCode(ResponseConsts.SUCCESS);
-            response.setDescribe("success");
-            response.setPartnerId(request.getPartnerId());
-            response.setChannelId(request.getChannelId());
-
+            oldpass = AesUtils.encrypt("", request.getBody().getOldPassword());
+            newpass = AesUtils.encrypt("", request.getBody().getNewPassword());
+            logger.info("旧密码加密后的字符串:{}",oldpass);
+            logger.info("新密码加密后的字符串:{}",newpass);
         } catch (Exception e) {
             e.printStackTrace();
-            Assert.fail(ResponseConsts.MEMBER_SYSTEM_EXCEPTION);
+            Assert.fail(ResponseConsts.ERROR,"加密异常。");
+        }
+        CsSecurityUser csSecurityUser = csSecurityUserService.selectByUserIdAndPassword(request.getBody().getUserId(), oldpass);
+        Assert.notNull(csSecurityUser, ResponseConsts.MEMBER_USERINFO_NOT_EXIST, "⽆效⽤户");
+        csSecurityUser.setPassword(newpass);
+        csSecurityUser.setLastModifiedUser(request.getBody().getCreateUserId());
+        csSecurityUser.setLastModifiedTime(new Date());
+        if(csSecurityUserService.updateByPrimaryKeySelective(csSecurityUser) > 0){
+            responseBody.setUserId(csSecurityUser.getId());
+            response.setBody(responseBody);
+            response.setCode(ResponseConsts.SUCCESS);
+            response.setDescribe("修改密码成功。");
+        }else{
+            response.setCode(ResponseConsts.ERROR);
+            response.setDescribe("修改密码失败,请联系管理员。");
         }
         return response;
     }
 
-    public OrganizationEntity findGroupInfo(String userId) {
-       return organizationService.findGroupById(userId);
-
-    }*/
 
 
 }

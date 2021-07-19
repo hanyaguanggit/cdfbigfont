@@ -5,10 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+/*@NoArgsConstructor
+@AllArgsConstructor*/
 public class LoginRequestVo extends OtaResponse<LoginRequestVoBody> {
 
 }

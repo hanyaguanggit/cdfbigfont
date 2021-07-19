@@ -21,8 +21,8 @@ public class LoginRequestVoBody implements Valid {
 
     @Override
     public void valid() {
-        Assert.isNull(userName, ResponseConsts.TICKET_PARAM_ERROR,"用户名不能为空!");
-        Assert.isNull(password,ResponseConsts.PARAM_ERROR,"登录密码为空!");
-        Assert.isNull(validCode,ResponseConsts.PARAM_ERROR,"验证码为空！");
+        Assert.notNull(userName, ResponseConsts.PARAM_ERROR,"用户名不能为空!");
+        Assert.notNull(password,ResponseConsts.PARAM_ERROR,"登录密码为空!");
+        Assert.notNull(validCode,ResponseConsts.PARAM_ERROR,"验证码为空！");
     }
 }

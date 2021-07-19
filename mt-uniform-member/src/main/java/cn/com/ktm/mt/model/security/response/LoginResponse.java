@@ -1,5 +1,6 @@
 package cn.com.ktm.mt.model.security.response;
 
+import cn.com.ktm.mt.model.CsSecurityUser;
 import cn.com.ktm.mt.model.message.OtaResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,4 +14,5 @@ import java.util.List;
 @NoArgsConstructor
 public class LoginResponse extends OtaResponse<LoginResponseBody> {
       private List<LoginResponseBody> menuList;
+      private CsSecurityUser csSecurityUser;
 }

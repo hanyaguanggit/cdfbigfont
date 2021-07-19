@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class ResetPasswordResponseBody implements Body {
     private Integer userType;
     private String orgCode;
+    private int userId;
     @Override
     public void valid() {
 

@@ -228,4 +228,19 @@
     where  loginName = #{loginName,jdbcType=VARCHAR}
     AND  password = #{password,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByUserIdAndPassword" resultMap="BaseResultMap" parameterType="cn.com.ktm.mt.model.security.request.ResetPassRequestVoBody" >
+    select
+    <include refid="Base_Column_List" />
+    from cs_security_user
+    where id = #{id,jdbcType=INTEGER}
+    AND password = #{password,jdbcType=VARCHAR}
+  </select>
+  <update id="updateUserById" parameterType="java.lang.Integer" >
+    update cs_security_user
+    set
+      password = #{password,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
 </mapper>

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsMemberMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.bean.CsMember" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="loginName" property="loginName" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="loginPassword" property="loginPassword" jdbcType="VARCHAR" />
+    <result column="payPassword" property="payPassword" jdbcType="VARCHAR" />
+    <result column="memberLevelId" property="memberLevelId" jdbcType="INTEGER" />
+    <result column="regSource" property="regSource" jdbcType="TINYINT" />
+    <result column="entry" property="entry" jdbcType="TINYINT" />
+    <result column="regSubsiteId" property="regSubsiteId" jdbcType="INTEGER" />
+    <result column="regLanguageType" property="regLanguageType" jdbcType="TINYINT" />
+    <result column="regIP" property="regIP" jdbcType="VARCHAR" />
+    <result column="regTime" property="regTime" jdbcType="TIMESTAMP" />
+    <result column="c4MemberCardNo" property="c4MemberCardNo" jdbcType="VARCHAR" />
+    <result column="c4MemberCardNoValidated" property="c4MemberCardNoValidated" jdbcType="BIT" />
+    <result column="c4MemberCardNoValidatedTime" property="c4MemberCardNoValidatedTime" jdbcType="TIMESTAMP" />
+    <result column="mobileValidated" property="mobileValidated" jdbcType="BIT" />
+    <result column="mobileValidatedTime" property="mobileValidatedTime" jdbcType="TIMESTAMP" />
+    <result column="mailValidated" property="mailValidated" jdbcType="BIT" />
+    <result column="mailvalidatedTime" property="mailvalidatedTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="pointPayLockTime" property="pointPayLockTime" jdbcType="TIMESTAMP" />
+    <result column="loginPasswordStrength" property="loginPasswordStrength" jdbcType="TINYINT" />
+    <result column="payPasswordStrength" property="payPasswordStrength" jdbcType="TINYINT" />
+    <result column="unionId" property="unionId" jdbcType="INTEGER" />
+    <result column="unionMemberId" property="unionMemberId" jdbcType="INTEGER" />
+    <result column="multipleChannelsId" property="multipleChannelsId" jdbcType="TINYINT" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="oldMemberId" property="oldMemberId" jdbcType="INTEGER" />
+    <result column="enterNo" property="enterNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loginName, email, mobile, loginPassword, payPassword, memberLevelId, regSource, 
+    entry, regSubsiteId, regLanguageType, regIP, regTime, c4MemberCardNo, c4MemberCardNoValidated, 
+    c4MemberCardNoValidatedTime, mobileValidated, mobileValidatedTime, mailValidated, 
+    mailvalidatedTime, status, pointPayLockTime, loginPasswordStrength, payPasswordStrength, 
+    unionId, unionMemberId, multipleChannelsId, salt, oldMemberId, enterNo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cs_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.bean.CsMember" >
+    insert into cs_member (id, loginName, email, 
+      mobile, loginPassword, payPassword, 
+      memberLevelId, regSource, entry, 
+      regSubsiteId, regLanguageType, regIP, 
+      regTime, c4MemberCardNo, c4MemberCardNoValidated, 
+      c4MemberCardNoValidatedTime, mobileValidated, 
+      mobileValidatedTime, mailValidated, mailvalidatedTime, 
+      status, pointPayLockTime, loginPasswordStrength, 
+      payPasswordStrength, unionId, unionMemberId, 
+      multipleChannelsId, salt, oldMemberId, 
+      enterNo)
+    values (#{id,jdbcType=INTEGER}, #{loginName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, 
+      #{memberLevelId,jdbcType=INTEGER}, #{regSource,jdbcType=TINYINT}, #{entry,jdbcType=TINYINT}, 
+      #{regSubsiteId,jdbcType=INTEGER}, #{regLanguageType,jdbcType=TINYINT}, #{regIP,jdbcType=VARCHAR}, 
+      #{regTime,jdbcType=TIMESTAMP}, #{c4MemberCardNo,jdbcType=VARCHAR}, #{c4MemberCardNoValidated,jdbcType=BIT}, 
+      #{c4MemberCardNoValidatedTime,jdbcType=TIMESTAMP}, #{mobileValidated,jdbcType=BIT}, 
+      #{mobileValidatedTime,jdbcType=TIMESTAMP}, #{mailValidated,jdbcType=BIT}, #{mailvalidatedTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{pointPayLockTime,jdbcType=TIMESTAMP}, #{loginPasswordStrength,jdbcType=TINYINT}, 
+      #{payPasswordStrength,jdbcType=TINYINT}, #{unionId,jdbcType=INTEGER}, #{unionMemberId,jdbcType=INTEGER}, 
+      #{multipleChannelsId,jdbcType=TINYINT}, #{salt,jdbcType=VARCHAR}, #{oldMemberId,jdbcType=INTEGER}, 
+      #{enterNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.bean.CsMember" >
+    insert into cs_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loginName != null" >
+        loginName,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="loginPassword != null" >
+        loginPassword,
+      </if>
+      <if test="payPassword != null" >
+        payPassword,
+      </if>
+      <if test="memberLevelId != null" >
+        memberLevelId,
+      </if>
+      <if test="regSource != null" >
+        regSource,
+      </if>
+      <if test="entry != null" >
+        entry,
+      </if>
+      <if test="regSubsiteId != null" >
+        regSubsiteId,
+      </if>
+      <if test="regLanguageType != null" >
+        regLanguageType,
+      </if>
+      <if test="regIP != null" >
+        regIP,
+      </if>
+      <if test="regTime != null" >
+        regTime,
+      </if>
+      <if test="c4MemberCardNo != null" >
+        c4MemberCardNo,
+      </if>
+      <if test="c4MemberCardNoValidated != null" >
+        c4MemberCardNoValidated,
+      </if>
+      <if test="c4MemberCardNoValidatedTime != null" >
+        c4MemberCardNoValidatedTime,
+      </if>
+      <if test="mobileValidated != null" >
+        mobileValidated,
+      </if>
+      <if test="mobileValidatedTime != null" >
+        mobileValidatedTime,
+      </if>
+      <if test="mailValidated != null" >
+        mailValidated,
+      </if>
+      <if test="mailvalidatedTime != null" >
+        mailvalidatedTime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="pointPayLockTime != null" >
+        pointPayLockTime,
+      </if>
+      <if test="loginPasswordStrength != null" >
+        loginPasswordStrength,
+      </if>
+      <if test="payPasswordStrength != null" >
+        payPasswordStrength,
+      </if>
+      <if test="unionId != null" >
+        unionId,
+      </if>
+      <if test="unionMemberId != null" >
+        unionMemberId,
+      </if>
+      <if test="multipleChannelsId != null" >
+        multipleChannelsId,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="oldMemberId != null" >
+        oldMemberId,
+      </if>
+      <if test="enterNo != null" >
+        enterNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null" >
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevelId != null" >
+        #{memberLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="regSource != null" >
+        #{regSource,jdbcType=TINYINT},
+      </if>
+      <if test="entry != null" >
+        #{entry,jdbcType=TINYINT},
+      </if>
+      <if test="regSubsiteId != null" >
+        #{regSubsiteId,jdbcType=INTEGER},
+      </if>
+      <if test="regLanguageType != null" >
+        #{regLanguageType,jdbcType=TINYINT},
+      </if>
+      <if test="regIP != null" >
+        #{regIP,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null" >
+        #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="c4MemberCardNo != null" >
+        #{c4MemberCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="c4MemberCardNoValidated != null" >
+        #{c4MemberCardNoValidated,jdbcType=BIT},
+      </if>
+      <if test="c4MemberCardNoValidatedTime != null" >
+        #{c4MemberCardNoValidatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobileValidated != null" >
+        #{mobileValidated,jdbcType=BIT},
+      </if>
+      <if test="mobileValidatedTime != null" >
+        #{mobileValidatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mailValidated != null" >
+        #{mailValidated,jdbcType=BIT},
+      </if>
+      <if test="mailvalidatedTime != null" >
+        #{mailvalidatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="pointPayLockTime != null" >
+        #{pointPayLockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginPasswordStrength != null" >
+        #{loginPasswordStrength,jdbcType=TINYINT},
+      </if>
+      <if test="payPasswordStrength != null" >
+        #{payPasswordStrength,jdbcType=TINYINT},
+      </if>
+      <if test="unionId != null" >
+        #{unionId,jdbcType=INTEGER},
+      </if>
+      <if test="unionMemberId != null" >
+        #{unionMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="multipleChannelsId != null" >
+        #{multipleChannelsId,jdbcType=TINYINT},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="oldMemberId != null" >
+        #{oldMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="enterNo != null" >
+        #{enterNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.bean.CsMember" >
+    update cs_member
+    <set >
+      <if test="loginName != null" >
+        loginName = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        loginPassword = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null" >
+        payPassword = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevelId != null" >
+        memberLevelId = #{memberLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="regSource != null" >
+        regSource = #{regSource,jdbcType=TINYINT},
+      </if>
+      <if test="entry != null" >
+        entry = #{entry,jdbcType=TINYINT},
+      </if>
+      <if test="regSubsiteId != null" >
+        regSubsiteId = #{regSubsiteId,jdbcType=INTEGER},
+      </if>
+      <if test="regLanguageType != null" >
+        regLanguageType = #{regLanguageType,jdbcType=TINYINT},
+      </if>
+      <if test="regIP != null" >
+        regIP = #{regIP,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null" >
+        regTime = #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="c4MemberCardNo != null" >
+        c4MemberCardNo = #{c4MemberCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="c4MemberCardNoValidated != null" >
+        c4MemberCardNoValidated = #{c4MemberCardNoValidated,jdbcType=BIT},
+      </if>
+      <if test="c4MemberCardNoValidatedTime != null" >
+        c4MemberCardNoValidatedTime = #{c4MemberCardNoValidatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobileValidated != null" >
+        mobileValidated = #{mobileValidated,jdbcType=BIT},
+      </if>
+      <if test="mobileValidatedTime != null" >
+        mobileValidatedTime = #{mobileValidatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mailValidated != null" >
+        mailValidated = #{mailValidated,jdbcType=BIT},
+      </if>
+      <if test="mailvalidatedTime != null" >
+        mailvalidatedTime = #{mailvalidatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="pointPayLockTime != null" >
+        pointPayLockTime = #{pointPayLockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginPasswordStrength != null" >
+        loginPasswordStrength = #{loginPasswordStrength,jdbcType=TINYINT},
+      </if>
+      <if test="payPasswordStrength != null" >
+        payPasswordStrength = #{payPasswordStrength,jdbcType=TINYINT},
+      </if>
+      <if test="unionId != null" >
+        unionId = #{unionId,jdbcType=INTEGER},
+      </if>
+      <if test="unionMemberId != null" >
+        unionMemberId = #{unionMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="multipleChannelsId != null" >
+        multipleChannelsId = #{multipleChannelsId,jdbcType=TINYINT},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="oldMemberId != null" >
+        oldMemberId = #{oldMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="enterNo != null" >
+        enterNo = #{enterNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.bean.CsMember" >
+    update cs_member
+    set loginName = #{loginName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      loginPassword = #{loginPassword,jdbcType=VARCHAR},
+      payPassword = #{payPassword,jdbcType=VARCHAR},
+      memberLevelId = #{memberLevelId,jdbcType=INTEGER},
+      regSource = #{regSource,jdbcType=TINYINT},
+      entry = #{entry,jdbcType=TINYINT},
+      regSubsiteId = #{regSubsiteId,jdbcType=INTEGER},
+      regLanguageType = #{regLanguageType,jdbcType=TINYINT},
+      regIP = #{regIP,jdbcType=VARCHAR},
+      regTime = #{regTime,jdbcType=TIMESTAMP},
+      c4MemberCardNo = #{c4MemberCardNo,jdbcType=VARCHAR},
+      c4MemberCardNoValidated = #{c4MemberCardNoValidated,jdbcType=BIT},
+      c4MemberCardNoValidatedTime = #{c4MemberCardNoValidatedTime,jdbcType=TIMESTAMP},
+      mobileValidated = #{mobileValidated,jdbcType=BIT},
+      mobileValidatedTime = #{mobileValidatedTime,jdbcType=TIMESTAMP},
+      mailValidated = #{mailValidated,jdbcType=BIT},
+      mailvalidatedTime = #{mailvalidatedTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      pointPayLockTime = #{pointPayLockTime,jdbcType=TIMESTAMP},
+      loginPasswordStrength = #{loginPasswordStrength,jdbcType=TINYINT},
+      payPasswordStrength = #{payPasswordStrength,jdbcType=TINYINT},
+      unionId = #{unionId,jdbcType=INTEGER},
+      unionMemberId = #{unionMemberId,jdbcType=INTEGER},
+      multipleChannelsId = #{multipleChannelsId,jdbcType=TINYINT},
+      salt = #{salt,jdbcType=VARCHAR},
+      oldMemberId = #{oldMemberId,jdbcType=INTEGER},
+      enterNo = #{enterNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -2,7 +2,9 @@ package cn.com.ktm.mt.mapper;
 
 import cn.com.ktm.mt.model.CsSecurityUser;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CsSecurityUserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -18,4 +20,8 @@ public interface CsSecurityUserMapper {
 
     //后台登录，通过用户名和密码查询信息
     CsSecurityUser selectByLoginNameAndPassword(@Param("loginName") String loginName,@Param("password") String password);
+
+    CsSecurityUser selectByUserIdAndPassword(@Param("id")int userId,@Param("password") String password);
+
+    int updateUserById(@Param("id")int userId);
 }
