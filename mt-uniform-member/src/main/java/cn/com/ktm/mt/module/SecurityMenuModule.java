@@ -1,6 +1,6 @@
 package cn.com.ktm.mt.module;
 
-import cn.com.ktm.mt.model.CsSecurityUser;
+import cn.com.ktm.mt.model.bean.CsSecurityUser;
 import cn.com.ktm.mt.model.constant.ResponseConsts;
 import cn.com.ktm.mt.model.exception.Assert;
 import cn.com.ktm.mt.model.message.OtaResponse;
@@ -19,7 +19,7 @@ import java.util.*;
 
 /**
  * hyg
- *权限菜单
+ *权限
  */
 @Component
 public class SecurityMenuModule {
@@ -31,7 +31,12 @@ public class SecurityMenuModule {
     @Autowired
     private CsSecurityUserService csSecurityUserService;
 
-    public OtaResponse findMenuByUserId(LoginRequestVoBody request)  {
+    /**
+     * 保存
+     * @param request
+     * @return
+     */
+    /*public OtaResponse findMenu(LoginRequestVoBody request)  {
         Assert.notBlank(request.getUserName(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, " 用户名为空");
         Assert.notBlank(request.getPassword(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "密码为空");
         //先通过用户名和密码查询到用户id，再查询其拥有的菜单权限。
@@ -60,6 +65,6 @@ public class SecurityMenuModule {
         }
         return response;
     }
-
+*/
 
 }

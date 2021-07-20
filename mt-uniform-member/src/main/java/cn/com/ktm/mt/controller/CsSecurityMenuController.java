@@ -15,28 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Log4j2
 public class CsSecurityMenuController {
-  /*  @Autowired
-    private SecurityMenuModule securityMenuModule;*/
-
-    @Autowired
-    private CsSecurityUserModule securityUserModule;
 
 
-    @PostMapping(value = "admin/login", consumes = "application/json")
-    public OtaResponse findMenuByUserId(@RequestBody LoginRequestVo request) {
-        OtaResponse process = new OtaResponse<>();
-        try {
-           // process = securityMenuModule.findMenuByUserId(request);
-              process = securityUserModule.adminLogin(request);
-            //测试获取验证码
-           /*String validCode = ValidCodeModule.generateRandomCode(4);
-            log.info("验证码为：{}",validCode);
-*/
-        } catch (AssertError e) {
-            process = OtaResponse.fail(e.getErrorCode().getCode(), e.getMessage(),null,null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return process;
-    }
+
+
 }

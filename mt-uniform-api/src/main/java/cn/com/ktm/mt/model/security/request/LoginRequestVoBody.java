@@ -2,6 +2,7 @@ package cn.com.ktm.mt.model.security.request;
 
 import cn.com.ktm.mt.model.constant.ResponseConsts;
 import cn.com.ktm.mt.model.exception.Assert;
+import cn.com.ktm.mt.model.message.Body;
 import cn.com.ktm.mt.model.message.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequestVoBody implements Valid {
+public class LoginRequestVoBody implements Body {
     private String userName;
     private String password;
     private String validCode;

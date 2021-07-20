@@ -1,10 +1,8 @@
 package cn.com.ktm.mt.module;
 
-import cn.com.ktm.mt.model.CsSecurityUser;
+import cn.com.ktm.mt.model.bean.CsSecurityUser;
 import cn.com.ktm.mt.model.constant.ResponseConsts;
 import cn.com.ktm.mt.model.exception.Assert;
-import cn.com.ktm.mt.model.message.OtaResponse;
-import cn.com.ktm.mt.model.message.member.personallogin.response.PersonalLoginResponse;
 import cn.com.ktm.mt.model.message.member.resetpassword.request.ResetPasswordRequest;
 import cn.com.ktm.mt.model.message.member.resetpassword.response.ResetPasswordResponse;
 import cn.com.ktm.mt.model.message.member.resetpassword.response.ResetPasswordResponseBody;
@@ -16,7 +14,6 @@ import cn.com.ktm.mt.model.util.utils.ValidUtil;
 import cn.com.ktm.mt.model.util.utils.security.AesUtils;
 import cn.com.ktm.mt.service.CsSecurityUserService;
 import cn.com.ktm.mt.service.SecurityMenuService;
-import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +57,7 @@ public class CsSecurityUserModule {
             logger.info("解密的字符串:{}",pass);
             CsSecurityUser csSecurityUser = csSecurityUserService.selectByLoginNameAndPassword(request.getBody().getUserName(),pass);
             if(csSecurityUser != null){
-                //TODO：是否验证后台用户失效日期
+                //TODO：1/是否验证后台用户失效日期;2/用户锁定后如何处理
                 if(csSecurityUser.getLocked()){
                     response.setDescribe("此用户已被锁定，请联系管理员。");
                 }
@@ -89,121 +86,9 @@ public class CsSecurityUserModule {
     }
 
 
-/*    public GroupLoginResponse groupLogin(GroupLoginRequest request) {
-        Assert.notNull(request.getChannelId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, " 渠道来源为空");
-        Assert.notBlank(request.getPartnerId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID为空");
-        request.getBody().valid();
-
-        PartnerEntity partner = partnerApi.findPartner(request.getPartnerId());
-        Assert.notNull(partner,ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID错误");
-        Assert.isTrue(request.getChannelId() > 0 && request.getChannelId() <= MTChannelEnum.values().length, ResponseConsts.MEMBER_PARAM_ERROR,"渠道来源错误");
-        Assert.isTrue(ValidUtil.uniformSocialCreditCodeValidate(request.getBody().getOrgCode()), ResponseConsts.MEMBER_AUDIT_INFORMATION_ERROR, "组织机构代码错误");
-        Assert.isTrue(request.getBody().getUserType() == MTUserTypeEnum.TOUR_GROUP.getValue() || request.getBody().getUserType() == MTUserTypeEnum.SPECIAL_GROUP.getValue(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "⽤户类型错误");
-        if (!request.getBody().getValidCode().equalsIgnoreCase(RedisCache.db().get(request.getBody().getValidToken()))) {
-            Assert.fail(ResponseConsts.MEMBER_VALIDCODE_ERROR, "图形验证码校验失败");
-        }
-        RedisCache.db().del(request.getBody().getValidToken());
-        GroupLoginResponse response = new GroupLoginResponse();
-        GroupLoginResponseBody responseBody = new GroupLoginResponseBody();
-
-        OrganizationEntity organization = null;
-        try {
-            organization = organizationService.findGroupByOrgCodeAndUserType(request.getBody().getOrgCode(), request.getBody().getUserType());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(ResponseConsts.MEMBER_SYSTEM_EXCEPTION);
-        }
-        if (!ObjectUtils.allNotNull(organization)) {
-            Assert.fail(ResponseConsts.MEMBER_ACCOUNT_PASSWORD_ERROR, "团队登录账号或密码错误");
-        } else {
-            Assert.eq(organization.getPassword(), MD5Util.strToMD5(request.getBody().getPassword()), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "团队登录账号或密码错误", null);
-
-        }
-        responseBody.setUserId(String.valueOf(organization.getId()));
-        responseBody.setUserType(organization.getType());
-        responseBody.setOrgCode(organization.getOrgCode());
-        response.setBody(responseBody);
-        response.setCode(ResponseConsts.SUCCESS);
-        response.setDescribe("success");
-        response.setPartnerId(request.getPartnerId());
-        response.setChannelId(request.getChannelId());
-
-
-        return response;
-    }
-
-    public OtaResponse getUserInfo(UserInfoRequest request) {
-        Assert.notNull(request.getChannelId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, " 渠道来源为空");
-        Assert.notBlank(request.getPartnerId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID为空");
-        request.getBody().valid();
-        PartnerEntity partner = partnerApi.findPartner(request.getPartnerId());
-        Assert.notNull(partner,ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID错误");
-        Assert.isTrue(request.getChannelId() > 0 && request.getChannelId() <= MTChannelEnum.values().length, ResponseConsts.MEMBER_PARAM_ERROR,"渠道来源错误");
-        Assert.isTrue(request.getBody().getUserType() > 0 && request.getBody().getUserType() <= MTUserTypeEnum.values().length, ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "⽤户类型错误");
-        if (request.getBody().getUserType() == MTUserTypeEnum.PERSONAL.getValue()) {
-            Assert.isTrue(ValidUtil.isMobile(request.getBody().getPhone()), ResponseConsts.MEMBER_PARAM_ERROR, "手机号输入错误");
-        }
-        if (request.getBody().getUserType() == MTUserTypeEnum.TOUR_GROUP.getValue() || request.getBody().getUserType() == MTUserTypeEnum.SPECIAL_GROUP.getValue()) {
-            Assert.isTrue(ValidUtil.uniformSocialCreditCodeValidate(request.getBody().getOrgCode()), ResponseConsts.MEMBER_PARAM_ERROR, "组织机构代码输入有误");
-        }
-
-        UserInfoResponse response = new UserInfoResponse();
-        UserInfoResponseBody responseBody = new UserInfoResponseBody();
-
-        if (request.getBody().getUserType() == MTUserTypeEnum.PERSONAL.getValue()) {
-            UserEntity user = UserService.getUserInfo(request.getBody().getPhone(), request.getBody().getUserId());
-            Assert.notNull(user, ResponseConsts.MEMBER_USERINFO_NOT_EXIST, "找不到相应⽤户信息");
-            if (ObjectUtils.allNotNull(user.getUname())) {
-                responseBody.setContactName(user.getUname());
-            }
-            responseBody.setPhone(user.getPhone());
-
-            if (ObjectUtils.allNotNull(user.getEmail())) {
-                responseBody.setEmail(user.getEmail());
-            }
-            response.setBody(responseBody);
-        }
-        if (request.getBody().getUserType() == MTUserTypeEnum.TOUR_GROUP.getValue() || request.getBody().getUserType() == MTUserTypeEnum.SPECIAL_GROUP.getValue()) {
-
-            OrganizationEntity organization = organizationService.getOrganization(request.getBody().getOrgCode(), request.getBody().getUserType(), request.getBody().getUserId());
-            Assert.notNull(organization, ResponseConsts.MEMBER_USERINFO_NOT_EXIST, "找不到相应⽤户信息");
-            responseBody.setContactName(organization.getContactName());
-            responseBody.setPhone(organization.getPhone());
-            responseBody.setOrgName(organization.getRegName());
-            if (ObjectUtils.allNotNull(organization.getEmail())) {
-                responseBody.setEmail(organization.getEmail());
-            }
-            responseBody.setOrgCode(organization.getOrgCode());
-            responseBody.setAuditStatus(organization.getAuditStatus());
-            responseBody.setStatus(organization.getStatus());
-            Map<String, List<String>> submitAuditContent = new HashMap<>();
-
-            if (organization.getOrgCodeFile() != null && organization.getOrgCodeFile() != "") {
-                submitAuditContent.put("orgCodeFiles", Collections.singletonList(organization.getOrgCodeFile()));
-            }
-            if (organization.getLicenseFile() != null && organization.getLicenseFile() != "") {
-                submitAuditContent.put("licenseFiles", Collections.singletonList(organization.getLicenseFile()));
-            }
-            if (organization.getPolicyFiles() != null && organization.getPolicyFiles() != "") {
-                submitAuditContent.put("policyFiles", Arrays.asList(organization.getPolicyFiles().split(MemberConsts.SEPARATOR)));
-            }
-            if (organization.getSubOrgFiles() != null && organization.getSubOrgFiles() != "") {
-                submitAuditContent.put("subOrgFiles", Arrays.asList(organization.getSubOrgFiles().split(MemberConsts.SEPARATOR)));
-            }
-            responseBody.setSubmitAuditContent(submitAuditContent);
-            response.setBody(responseBody);
-        }
-        response.setCode(ResponseConsts.SUCCESS);
-        response.setDescribe("success");
-        response.setPartnerId(request.getPartnerId());
-        response.setChannelId(request.getChannelId());
-
-
-        return response;
-    }
-
     /**
-     * 1.6 忘记密码(重置密码请求)
+     * hyg
+     * 后台-修改密码
      * @param request
      * @return
      */

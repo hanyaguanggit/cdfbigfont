@@ -1,7 +1,9 @@
 package cn.com.ktm.mt.mapper;
 
-import cn.com.ktm.mt.model.CsSecurityUserRole;
+import cn.com.ktm.mt.model.bean.CsSecurityUserRole;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CsSecurityUserRoleMapper {
     int deleteByPrimaryKey(Integer id);
 

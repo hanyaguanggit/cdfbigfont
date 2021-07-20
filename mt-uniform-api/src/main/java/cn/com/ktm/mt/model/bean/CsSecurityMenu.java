@@ -1,6 +1,8 @@
-package cn.com.ktm.mt.model;
+package cn.com.ktm.mt.model.bean;
+import java.io.Serializable;
 
-public class CsSecurityMenu {
+
+public class CsSecurityMenu implements Serializable {
     private Integer id;
 
     private Integer parentid;

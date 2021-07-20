@@ -1,10 +1,11 @@
 package cn.com.ktm.mt.mapper;
 
-import cn.com.ktm.mt.model.CsSecurityMenu;
+import cn.com.ktm.mt.model.bean.CsSecurityMenu;
 import cn.com.ktm.mt.model.security.response.LoginResponseBody;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface CsSecurityMenuMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -17,6 +18,6 @@ public interface CsSecurityMenuMapper {
     int updateByPrimaryKeySelective(CsSecurityMenu record);
 
     int updateByPrimaryKey(CsSecurityMenu record);
-    //根据用户id查询权限菜单
+
     List<LoginResponseBody> findMenuByUserId(Integer userId);
 }

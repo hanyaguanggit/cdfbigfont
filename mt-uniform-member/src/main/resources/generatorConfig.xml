@@ -41,7 +41,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="cs_member" tableName="cs_member" domainObjectName="CsMember" enableCountByExample="false"
+        <table schema="cs_security_menu" tableName="cs_security_menu" domainObjectName="CsSecurityMenu" enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
         <property name="useActualColumnNames" value="true" />

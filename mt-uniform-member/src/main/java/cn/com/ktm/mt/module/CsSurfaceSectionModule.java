@@ -107,23 +107,7 @@ public class CsSurfaceSectionModule {
                 Assert.fail(ResponseConsts.ERROR,"暂未配置此类型");
                 break;
         }
-       /* if(request.getPositionTypeId() == SectionConsts.PICTURE_LINK){
-            csPictureLinkModule.addPictureLinkeModel(request);
-        }else if(request.getPositionTypeId() == SectionConsts.TEXT_LINK){
-            csSurfaceTextLinkModule.addTextLinkeModel(request);
-        }else if(request.getPositionTypeId() == SectionConsts.RICH_TEXT){
-            csSurfaceRichTextModule.addCsSurfaceRichTextModel(request);
-        }else if(request.getPositionTypeId() == SectionConsts.BEST_SELLER_LIST){
-            csSurfaceBestSellerListModule.addBestSellerListModel(request);
-        }else if(request.getPositionTypeId() == SectionConsts.RECOMMEND_PRODUCT){
-            csSurfaceRecommendProductModule.addRecommendProduct(request);
-        }else if(request.getPositionTypeId() == SectionConsts.RECOMMEND_BRAND){
-            csSurfaceRecommendBrandModule.addRecommendBrand(request);
-        }else if(request.getPositionTypeId() == SectionConsts.SEARCH_HOT_WORDS){
-            csSurfaceSearchHotWordsModule.addCsSurfaceSearchHotWordsModel(request);
-        }else{
-            Assert.fail(ResponseConsts.ERROR,"暂未配置此类型");
-        }*/
+
         OtaResponse response = new OtaResponse();
         response.setCode(ResponseConsts.SUCCESS);
         response.setSectionId(csSurfaceSection.getId());
@@ -169,28 +153,31 @@ public class CsSurfaceSectionModule {
         csSurfaceSectionTemplateConfig.setTemplateId(request.getTemplateId());
         csSurfaceSectionTemplateConfig.setSitestructureId(request.getSiteStructureId());
         String tabName = "";
-        if(request.getPositionTypeId() == SectionConsts.PICTURE_LINK ){
-              tabName = SectionConsts.PICTURE_LINK_TAB_NAME;
-        }
-        else if(request.getPositionTypeId() == SectionConsts.RECOMMEND_BRAND){
-              tabName = SectionConsts.RECOMMEND_BRAND_TAB_NAME;
-        }
-        else if(request.getPositionTypeId() == SectionConsts.RECOMMEND_PRODUCT){
-            tabName = SectionConsts.RECOMMEND_PRODUCT_TAB_NAME;
-        }
-        else if(request.getPositionTypeId() ==SectionConsts.RECOMMENG_ARTICLE){
-            tabName = SectionConsts.RECOMMENG_ARTICLE_TAB_NAME;
-        }
-        else if(request.getPositionTypeId() == SectionConsts.RICH_TEXT){
-            tabName = SectionConsts.RICH_TEXT_TAB_NAME;
-        }
-        else if(request.getPositionTypeId() == SectionConsts.SHARE_ACTIVITY){
-            tabName = SectionConsts.SHARE_ACTIVITY_TAB_NAME;
-        }
-        else if(request.getPositionTypeId() == SectionConsts.TEXT_LINK){
-            tabName = SectionConsts.TEXT_LINK_TAB_NAME;
-        }else {
-            tabName = "未知";
+        switch (request.getPositionTypeId()){
+            case SectionConsts.PICTURE_LINK:
+                tabName = SectionConsts.PICTURE_LINK_TAB_NAME;
+                break;
+            case SectionConsts.RECOMMEND_BRAND:
+                tabName = SectionConsts.RECOMMEND_BRAND_TAB_NAME;
+                break;
+            case SectionConsts.RECOMMEND_PRODUCT:
+                tabName = SectionConsts.RECOMMEND_PRODUCT_TAB_NAME;
+                break;
+            case SectionConsts.RECOMMENG_ARTICLE:
+                tabName = SectionConsts.RECOMMENG_ARTICLE_TAB_NAME;
+                break;
+            case SectionConsts.RICH_TEXT:
+                tabName = SectionConsts.RICH_TEXT_TAB_NAME;
+                break;
+            case SectionConsts.SHARE_ACTIVITY:
+                tabName = SectionConsts.SHARE_ACTIVITY_TAB_NAME;
+                break;
+            case SectionConsts.TEXT_LINK:
+                tabName = SectionConsts.TEXT_LINK_TAB_NAME;
+                break;
+            default:
+                tabName = "未知";
+                break;
         }
         csSurfaceSectionTemplateConfig.setLinkTabname(tabName);
         try{

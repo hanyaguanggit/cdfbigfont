@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.ktm.mt.mapper.CsSecurityUserMapper" >
-  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.CsSecurityUser" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.bean.CsSecurityUser" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="userName" property="userName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
@@ -34,7 +34,7 @@
     delete from cs_security_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.com.ktm.mt.model.CsSecurityUser" >
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUser" >
     insert into cs_security_user (id, userName, password, 
       expiryDate, locked, credentialExpiryDate, 
       enabled, avatar, loginName, 
@@ -48,7 +48,7 @@
       #{deleted,jdbcType=SMALLINT}, #{creator,jdbcType=INTEGER}, #{lastModifiedUser,jdbcType=INTEGER}, 
       #{lastModifiedTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.CsSecurityUser" >
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUser" >
     insert into cs_security_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -151,7 +151,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.CsSecurityUser" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUser" >
     update cs_security_user
     <set >
       <if test="userName != null" >
@@ -202,7 +202,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.CsSecurityUser" >
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUser" >
     update cs_security_user
     set userName = #{userName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
@@ -228,7 +228,6 @@
     where  loginName = #{loginName,jdbcType=VARCHAR}
     AND  password = #{password,jdbcType=VARCHAR}
   </select>
-
   <select id="selectByUserIdAndPassword" resultMap="BaseResultMap" parameterType="cn.com.ktm.mt.model.security.request.ResetPassRequestVoBody" >
     select
     <include refid="Base_Column_List" />
@@ -242,5 +241,4 @@
       password = #{password,jdbcType=VARCHAR},
     where id = #{id,jdbcType=INTEGER}
   </update>
-
 </mapper>

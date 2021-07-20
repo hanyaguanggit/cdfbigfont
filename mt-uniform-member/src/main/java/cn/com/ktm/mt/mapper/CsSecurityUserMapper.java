@@ -1,6 +1,6 @@
 package cn.com.ktm.mt.mapper;
 
-import cn.com.ktm.mt.model.CsSecurityUser;
+import cn.com.ktm.mt.model.bean.CsSecurityUser;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

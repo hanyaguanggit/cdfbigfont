@@ -1,8 +1,8 @@
 package cn.com.ktm.mt.model.bean;
-
+import java.io.Serializable;
 import java.util.Date;
 
-public class CsMember {
+public class CsMember implements Serializable {
     private Integer id;
 
     private String loginName;

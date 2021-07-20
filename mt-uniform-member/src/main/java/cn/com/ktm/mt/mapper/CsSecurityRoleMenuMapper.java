@@ -1,7 +1,11 @@
 package cn.com.ktm.mt.mapper;
 
-import cn.com.ktm.mt.model.CsSecurityRoleMenu;
+import cn.com.ktm.mt.model.bean.CsSecurityRoleMenu;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@Repository
 public interface CsSecurityRoleMenuMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +18,6 @@ public interface CsSecurityRoleMenuMapper {
     int updateByPrimaryKeySelective(CsSecurityRoleMenu record);
 
     int updateByPrimaryKey(CsSecurityRoleMenu record);
+
+    List<CsSecurityRoleMenu> selectByRoleId(Integer roleid);
 }

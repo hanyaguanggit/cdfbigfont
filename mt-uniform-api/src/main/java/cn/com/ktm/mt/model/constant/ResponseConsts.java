@@ -217,6 +217,13 @@ public class ResponseConsts {
     @ResponseCode(value = "创建搜索热词失败")
     public static final int CREATE_SEARCH_HOT_WORDS_ERROR = 115;
 
+    @ResponseCode(value = "创建角色失败")
+    public static final int CREATE_ROLE_ERROR = 116;
+
+    @ResponseCode(value = "创建用户角色关系失败")
+    public static final int CREATE_USER_ROLE_ERROR = 117;
+
+
     static {
         Field[] fields = ResponseConsts.class.getDeclaredFields();
 
