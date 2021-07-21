@@ -370,14 +370,11 @@
 
     </build>
   <modules>
-  	<module>mt-uniform-order</module>
-  	<module>mt-uniform-ticket</module>
-  	<module>mt-uniform-account</module>
+
   	<module>mt-uniform-api</module>
   	<module>mt-uniform-eurekaserver</module>
-  	<module>mt-uniform-web</module>
-    <module>mt-uniform-basic</module>
+  <!--<module>mt-uniform-basic</module>-->
       <module>mt-uniform-member</module>
-      <module>mt-uniform-hystrix</module>
+     <!-- <module>mt-uniform-hystrix</module>-->
   </modules>
 </project>

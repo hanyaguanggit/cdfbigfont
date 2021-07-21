@@ -217,11 +217,24 @@ public class ResponseConsts {
     @ResponseCode(value = "创建搜索热词失败")
     public static final int CREATE_SEARCH_HOT_WORDS_ERROR = 115;
 
+    //权限角色相关
     @ResponseCode(value = "创建角色失败")
-    public static final int CREATE_ROLE_ERROR = 116;
+    public static final int CREATE_ROLE_ERROR = 221;
 
     @ResponseCode(value = "创建用户角色关系失败")
-    public static final int CREATE_USER_ROLE_ERROR = 117;
+    public static final int CREATE_USER_ROLE_ERROR = 222;
+
+    @ResponseCode(value = "删除角色权限失败")
+    public static final int DELETE_ROLR_MENU_ERROR = 223;
+
+    @ResponseCode(value = "创建角色权限失败")
+    public static final int CREATE_ROLE_MENU_ERROR = 224;
+
+    @ResponseCode(value = "该角色权限无变更,不需要保存")
+    public static final int SAME_ROLE_MENU = 225;
+
+    @ResponseCode(value = "删除用户角色失败")
+    public static final int DELETE_USER_ROLR_ERROR = 226;
 
 
     static {

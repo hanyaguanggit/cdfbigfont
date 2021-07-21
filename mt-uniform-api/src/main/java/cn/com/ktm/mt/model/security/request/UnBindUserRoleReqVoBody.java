@@ -11,10 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SecurityRoleReqVoBody extends BaseRequestVo implements Body {
-    private String roleName;//角色名称
+public class UnBindUserRoleReqVoBody implements Body {
+    private int userId;
+    private int roleId;
     @Override
     public void valid() {
-        Assert.notBlank(roleName,ResponseConsts.PARAM_ERROR,"角色名称为空。");
+        Assert.notNull(userId, ResponseConsts.PARAM_ERROR,"用户id为空。");
+        Assert.notNull(roleId,ResponseConsts.PARAM_ERROR,"角色id为空。");
     }
 }

@@ -7,14 +7,17 @@ import cn.com.ktm.mt.model.message.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SecurityRoleReqVoBody extends BaseRequestVo implements Body {
-    private String roleName;//角色名称
+public class BindUserRoleReqVoBody implements Body {
+    private int roleId;//角色id
+    private List<Integer> userIds;//用户id
     @Override
     public void valid() {
-        Assert.notBlank(roleName,ResponseConsts.PARAM_ERROR,"角色名称为空。");
+        Assert.notNull(roleId, ResponseConsts.PARAM_ERROR,"角色id为空。");
+        Assert.notEmpty(userIds,ResponseConsts.PARAM_ERROR,"用户id为空。");
     }
 }

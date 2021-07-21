@@ -19,13 +19,13 @@
     delete from cs_security_user_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUserRole">
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUserRole" useGeneratedKeys="true" keyProperty="id">
     insert into cs_security_user_role (id, userid, roleid
       )
     values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUserRole">
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUserRole" useGeneratedKeys="true" keyProperty="id">
     insert into cs_security_user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -68,4 +68,12 @@
       roleid = #{roleid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByRoleIdAndUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cs_security_user_role
+    where roleid = #{roleid,jdbcType=INTEGER}
+    and userid = #{userid,jdbcType=INTEGER}
+  </select>
 </mapper>

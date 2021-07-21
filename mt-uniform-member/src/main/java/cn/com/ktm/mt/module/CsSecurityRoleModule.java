@@ -1,10 +1,9 @@
 package cn.com.ktm.mt.module;
 
-import cn.com.ktm.mt.model.CsSurfacePictureLink;
 import cn.com.ktm.mt.model.bean.CsSecurityRole;
 import cn.com.ktm.mt.model.constant.ResponseConsts;
 import cn.com.ktm.mt.model.exception.Assert;
-import cn.com.ktm.mt.model.section.request.CsSurfaceSectionRequest;
+import cn.com.ktm.mt.model.message.OtaResponse;
 import cn.com.ktm.mt.model.security.request.SecurityRoleReqVo;
 import cn.com.ktm.mt.service.CsSecurityRoleService;
 import org.slf4j.Logger;
@@ -27,8 +26,9 @@ public class CsSecurityRoleModule {
      * @param request
      * @return
      */
-    public int addCsSecurityRole(SecurityRoleReqVo request){
+    public OtaResponse addCsSecurityRole(SecurityRoleReqVo request){
         int ar =0;
+        OtaResponse response = new OtaResponse();
         request.getBody().valid();
         CsSecurityRole csSecurityRole = new CsSecurityRole();
         csSecurityRole.setCode("");
@@ -46,6 +46,13 @@ public class CsSecurityRoleModule {
         if(csSecurityRole.getId() == null){
             Assert.fail(ResponseConsts.CREATE_ROLE_ERROR,"创建角色失败，id为空。");
         }
-        return ar;
+        if(ar > 0){
+            response.setCode(ResponseConsts.SUCCESS);
+            response.setDescribe("添加角色成功。");
+        }else {
+            response.setCode(ResponseConsts.ERROR);
+            response.setDescribe("添加角色失败。");
+        }
+        return response;
     }
 }

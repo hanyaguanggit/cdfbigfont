@@ -4,8 +4,8 @@ import cn.com.ktm.mt.model.message.OtaRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-
 @Data
 @AllArgsConstructor
-public class SecurityRoleMenuReqVo extends OtaRequest<SecurityRoleMenuReqVoBody> {
+public class BindUserRoleReqVo extends OtaRequest<BindUserRoleReqVoBody> {
+
 }

@@ -10,7 +10,17 @@ public class CsSecurityUserRoleService {
     private CsSecurityUserRoleMapper csSecurityUserRoleMapper;
 
     public int addSecurityUserRole(CsSecurityUserRole csSecurityUserRole){
-      int add = csSecurityUserRoleMapper.insertSelective(csSecurityUserRole);
+      int add = csSecurityUserRoleMapper.insert(csSecurityUserRole);
       return add > 0?add:0;
+    }
+
+    public CsSecurityUserRole selectByRoleIdAndUserId(Integer roleid, Integer userid){
+        CsSecurityUserRole ur = csSecurityUserRoleMapper.selectByRoleIdAndUserId(roleid,userid);
+        return ur;
+    }
+
+    public int unbindUserRole(Integer id ){
+        int del = csSecurityUserRoleMapper.deleteByPrimaryKey(id);
+        return del > 0?del:0;
     }
 }

@@ -5,11 +5,10 @@ import cn.com.ktm.mt.model.constant.ResponseConsts;
 import cn.com.ktm.mt.model.exception.AssertError;
 import cn.com.ktm.mt.model.message.OtaResponse;
 import cn.com.ktm.mt.model.message.member.resetpassword.request.ResetPasswordRequest;
-import cn.com.ktm.mt.model.security.request.LoginRequestVo;
-import cn.com.ktm.mt.model.security.request.ResetPassRequestVo;
-import cn.com.ktm.mt.model.security.request.SecurityRoleReqVo;
+import cn.com.ktm.mt.model.security.request.*;
 import cn.com.ktm.mt.module.CsSecurityRoleModule;
 import cn.com.ktm.mt.module.CsSecurityUserModule;
+import cn.com.ktm.mt.module.CsSecurityUserRoleModule;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,9 @@ public class CsSecurityUserController {
 
     @Autowired
     private CsSecurityRoleModule csSecurityRoleModule;
+
+    @Autowired
+    private CsSecurityUserRoleModule csSecurityUserRoleModule;
 
     /**
      * 后台--登录
@@ -77,13 +79,44 @@ public class CsSecurityUserController {
     public OtaResponse addRole(@RequestBody SecurityRoleReqVo request) {
         OtaResponse process = new OtaResponse<Integer>();
         try {
-            if(csSecurityRoleModule.addCsSecurityRole(request) > 0){
-                process.setDescribe("添加角色成功。");
-                process.setCode(ResponseConsts.SUCCESS);
-            }else{
-                process.setDescribe("添加角色失败。");
-                process.setCode(ResponseConsts.ERROR);
-            }
+            csSecurityRoleModule.addCsSecurityRole(request);
+        } catch (AssertError e) {
+            process = OtaResponse.fail(e.getErrorCode().getCode(), e.getMessage(),null,null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return process;
+    }
+
+
+    /**
+     * 后台--绑定用户角色
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "admin/addUserRole", consumes = "application/json")
+    public OtaResponse addUserRole(@RequestBody BindUserRoleReqVo request) {
+        OtaResponse process = new OtaResponse<Integer>();
+        try {
+           process = csSecurityUserRoleModule.addUserRole(request);
+        } catch (AssertError e) {
+            process = OtaResponse.fail(e.getErrorCode().getCode(), e.getMessage(),null,null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return process;
+    }
+
+    /**
+     * 后台--解绑用户角色
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "admin/unbindUserRole", consumes = "application/json")
+    public OtaResponse unbindUserRole(@RequestBody UnBindUserRoleReqVo request) {
+        OtaResponse process = new OtaResponse<Integer>();
+        try {
+            process = csSecurityUserRoleModule.unbindUserRole(request);
         } catch (AssertError e) {
             process = OtaResponse.fail(e.getErrorCode().getCode(), e.getMessage(),null,null);
         } catch (Exception e) {
