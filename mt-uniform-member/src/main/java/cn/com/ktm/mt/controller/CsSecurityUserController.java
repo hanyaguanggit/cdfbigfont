@@ -94,11 +94,11 @@ public class CsSecurityUserController {
      * @param request
      * @return
      */
-    @PostMapping(value = "admin/addUserRole", consumes = "application/json")
-    public OtaResponse addUserRole(@RequestBody BindUserRoleReqVo request) {
+    @PostMapping(value = "admin/bindUserRole", consumes = "application/json")
+    public OtaResponse bindUserRole(@RequestBody BindUserRoleReqVo request) {
         OtaResponse process = new OtaResponse<Integer>();
         try {
-           process = csSecurityUserRoleModule.addUserRole(request);
+           process = csSecurityUserRoleModule.bindUserRole(request);
         } catch (AssertError e) {
             process = OtaResponse.fail(e.getErrorCode().getCode(), e.getMessage(),null,null);
         } catch (Exception e) {

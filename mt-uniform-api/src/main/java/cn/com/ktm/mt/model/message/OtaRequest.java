@@ -8,7 +8,6 @@ public abstract class OtaRequest<T extends Body > extends AbstractMessage<T> imp
 	public void valid() {
 	  Assert.notNull(this.getPartnerId(), ResponseConsts.PARAM_ERROR);
 	  Assert.notNull(this.getChannelId(), ResponseConsts.PARAM_ERROR);
-		
 	}
 
 }

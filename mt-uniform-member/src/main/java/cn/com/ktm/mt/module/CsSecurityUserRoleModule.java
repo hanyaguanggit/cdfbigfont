@@ -26,7 +26,7 @@ public class CsSecurityUserRoleModule {
      * @return
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public OtaResponse addUserRole(BindUserRoleReqVo request){
+    public OtaResponse bindUserRole(BindUserRoleReqVo request){
         request.getBody().valid();
         OtaResponse response = new OtaResponse();
         try {
@@ -34,7 +34,7 @@ public class CsSecurityUserRoleModule {
                 CsSecurityUserRole userRole = new CsSecurityUserRole();
                 userRole.setRoleid(request.getBody().getRoleId());
                 userRole.setUserid(ur.intValue());
-                int var1 = csSecurityUserRoleService.addSecurityUserRole(userRole);
+                int var1 = csSecurityUserRoleService.bindSecurityUserRole(userRole);
                 Assert.isTrue(var1 > 0, ResponseConsts.CREATE_USER_ROLE_ERROR,"绑定用户角色失败。");
             });
             response.setCode(ResponseConsts.SUCCESS);

@@ -24,12 +24,12 @@ public class CsSecurityMenuController {
 
 
     /**
-     * 后台--角色权限
+     * 后台--保存角色权限
      * @param request
      * @return
      */
     @PostMapping(value = "admin/keepRoleMenu", consumes = "application/json")
-    public OtaResponse addRole(@RequestBody SecurityRoleMenuReqVo request) {
+    public OtaResponse keepRoleMenu(@RequestBody SecurityRoleMenuReqVo request) {
         OtaResponse process = new OtaResponse<Integer>();
         try {
            process = csSecurityRoleMenuModule.keepRoleMenu(request);

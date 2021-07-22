@@ -9,7 +9,7 @@ public class CsSecurityUserRoleService {
     @Autowired
     private CsSecurityUserRoleMapper csSecurityUserRoleMapper;
 
-    public int addSecurityUserRole(CsSecurityUserRole csSecurityUserRole){
+    public int bindSecurityUserRole(CsSecurityUserRole csSecurityUserRole){
       int add = csSecurityUserRoleMapper.insert(csSecurityUserRole);
       return add > 0?add:0;
     }
