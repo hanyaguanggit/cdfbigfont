@@ -20,13 +20,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-@Log4j2
 public class CsSecurityRoleMenuModule {
     Logger logger = LoggerFactory.getLogger(CsSecurityRoleMenuModule.class);
-
     @Autowired
     private CsSecurityRoleMenuService csSecurityRoleMenuService;
-
 
     /**
      * hyg
@@ -44,7 +41,6 @@ public class CsSecurityRoleMenuModule {
         List<CsSecurityRoleMenu> rmlist = csSecurityRoleMenuService.findRoleMenuByRoleId(request.getBody().getRoleId());
         old.addAll(rmlist.stream().map(r -> r.getMenuid()).collect(Collectors.toList()));
         logger.info("旧权限菜单id集合：{}", old);
-
         //不允许添加重复的权限菜单，去重。
         List<Integer> newMenuList = request.getBody().getMenuIdList().stream().distinct().collect(Collectors.toList());
         logger.info("去重后的菜单id列表：{}",newMenuList);
@@ -72,7 +68,8 @@ public class CsSecurityRoleMenuModule {
                 a = addroleMenu(newMenuList, request.getBody().getRoleId());
             }
         }
-        if (a > 0) {
+        boolean success = a > 0 ? true:false;
+        if (success){
             response.setCode(ResponseConsts.SUCCESS);
             response.setDescribe("保存角色权限成功。");
         } else {

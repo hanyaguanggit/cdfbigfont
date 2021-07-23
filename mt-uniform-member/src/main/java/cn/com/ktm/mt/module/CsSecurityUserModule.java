@@ -3,24 +3,32 @@ package cn.com.ktm.mt.module;
 import cn.com.ktm.mt.model.bean.CsSecurityUser;
 import cn.com.ktm.mt.model.constant.ResponseConsts;
 import cn.com.ktm.mt.model.exception.Assert;
+import cn.com.ktm.mt.model.message.OtaResponse;
 import cn.com.ktm.mt.model.message.member.resetpassword.request.ResetPasswordRequest;
 import cn.com.ktm.mt.model.message.member.resetpassword.response.ResetPasswordResponse;
 import cn.com.ktm.mt.model.message.member.resetpassword.response.ResetPasswordResponseBody;
 import cn.com.ktm.mt.model.redis.RedisCache;
 import cn.com.ktm.mt.model.security.request.LoginRequestVo;
+import cn.com.ktm.mt.model.security.request.user.FindSecurityUserListReq;
+import cn.com.ktm.mt.model.security.response.FindSecurityUserListRes;
+import cn.com.ktm.mt.model.security.response.FindSecurityUserListResModel;
 import cn.com.ktm.mt.model.security.response.LoginResponse;
 import cn.com.ktm.mt.model.security.response.LoginResponseBody;
 import cn.com.ktm.mt.model.util.utils.ValidUtil;
 import cn.com.ktm.mt.model.util.utils.security.AesUtils;
 import cn.com.ktm.mt.service.CsSecurityUserService;
 import cn.com.ktm.mt.service.SecurityMenuService;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * hyg 2021.07.16
@@ -42,8 +50,6 @@ public class CsSecurityUserModule {
      * @return
      */
     public LoginResponse adminLogin(LoginRequestVo request) {
-       /* Assert.notBlank(request.getPartnerId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "商家ID为空");
-        Assert.notNull(request.getChannelId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, "渠道来源为空");*/
         request.getBody().valid();
         if (!request.getBody().getValidCode().equalsIgnoreCase(RedisCache.db().get(request.getBody().getValidCode()))) {
            // Assert.fail(ResponseConsts.MEMBER_VALIDCODE_ERROR, "图形验证码校验失败");
@@ -127,6 +133,56 @@ public class CsSecurityUserModule {
         return response;
     }
 
+    /**
+     * hyg
+     * 查询系统用户列表
+     * @param request
+     * @return
+     */
+    public OtaResponse selectUserListByCondition(FindSecurityUserListReq request){
+        request.getBody().valid();
+        OtaResponse response = new OtaResponse<>();
+        PageHelper.startPage(request.getBody().getPageIndex(),request.getBody().getPageSize());
+        try{
+            List<FindSecurityUserListResModel> userListResBodyList = csSecurityUserService.selectUserListByCondition(request.getBody().getSearchKey(),request.getBody().getSearchContent());
+            response.setBody(addrolename(userListResBodyList));
+            response.setCode(ResponseConsts.SUCCESS);
+            response.setDescribe("查询成功。");
+        }catch (Exception e ){
+            e.printStackTrace();
+            logger.info("查询系统用户异常，参数请求体：{}",request.getBody());
+            response.setCode(ResponseConsts.ERROR);
+            response.setDescribe("查询异常，请查看日志");
+        }
+        return response;
+    }
 
-
+    /**
+     * hyg
+     * 一个人多个角色，把角色名称合并
+     * @param list
+     * @return
+     */
+    public List<FindSecurityUserListResModel> addrolename(List<FindSecurityUserListResModel> list){
+        List<FindSecurityUserListResModel> newlist = new ArrayList<>();
+        if(list.size() > 0) {
+            //根据用户id分组
+            Map<Integer, List<FindSecurityUserListResModel>> sameuser = list.stream().collect(Collectors.groupingBy(FindSecurityUserListResModel::getUserId));
+            for (Integer i: sameuser.keySet()) {
+                StringBuilder roleStr = new StringBuilder();
+                for (FindSecurityUserListResModel u:sameuser.get(i)) {
+                    if(u.getRoleName() != null && !"".equals(u.getRoleName())){
+                        roleStr.append(u.getRoleName()).append(",");
+                    }
+                }
+                FindSecurityUserListResModel ur =  sameuser.get(i).get(0);
+                if(roleStr.length() >= 1){
+                    ur.setRoleName(roleStr.substring(0,roleStr.length()-1));//去掉末尾逗号
+                }
+                logger.info("系统用户信息：{}",ur);
+                newlist.add(ur);
+            }
+        }
+        return newlist;
+    }
 }

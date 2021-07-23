@@ -2,8 +2,11 @@ package cn.com.ktm.mt.service;
 
 import cn.com.ktm.mt.mapper.CsSecurityUserMapper;
 import cn.com.ktm.mt.model.bean.CsSecurityUser;
+import cn.com.ktm.mt.model.security.response.FindSecurityUserListResModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CsSecurityUserService {
@@ -25,4 +28,7 @@ public class CsSecurityUserService {
    public int updateByPrimaryKeySelective(CsSecurityUser csSecurityUser){
        return csSecurityUserMapper.updateByPrimaryKeySelective(csSecurityUser);
    }
+   public List<FindSecurityUserListResModel> selectUserListByCondition(String searchKey, String searchContent){
+       return csSecurityUserMapper.selectUserListByCondition(searchKey,searchContent);
+   };
 }

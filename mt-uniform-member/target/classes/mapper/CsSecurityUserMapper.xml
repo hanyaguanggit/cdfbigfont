@@ -241,4 +241,29 @@
       password = #{password,jdbcType=VARCHAR},
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectUserListByCondition" resultType="cn.com.ktm.mt.model.security.response.FindSecurityUserListResModel" parameterType="cn.com.ktm.mt.model.security.request.user.FindSecurityUserListReqBody" >
+    SELECT csu.id userId,csu.userName userName,csu.loginName loginName,csu.mobilePhoneNo mobilePhoneNo,csu.email email,csu.expiryDate expiryDate,csu.createDate,csu.enabled enabled,csu.locked locked,csr.id roleId,csr.`name` as roleName
+    FROM  cs_security_user csu
+    LEFT JOIN cs_security_user_role csur ON csu.id = csur.userid
+    LEFT JOIN cs_security_role csr ON csur.roleid = csr.id
+    where 1=1
+      <if test="searchKey !=null">
+        <if test="searchKey =='userName'">
+          and userName = #{searchContent,jdbcType=VARCHAR}
+        </if>
+        <if test="searchKey == 'loginName'">
+          and loginName = #{searchContent,jdbcType=VARCHAR}
+        </if>
+        <if test="searchKey == 'mobilePhoneNo'">
+          and mobilePhoneNo = #{searchContent,jdbcType=VARCHAR}
+        </if>
+        <if test="searchKey == 'email'">
+          and email = #{searchContent,jdbcType=VARCHAR }
+        </if>
+        <if test="searchKey == 'roleName'">
+          and csr.`name` = #{searchContent,jdbcType=VARCHAR}
+        </if>
+      </if>
+  </select>
 </mapper>

@@ -1,8 +1,11 @@
 package cn.com.ktm.mt.mapper;
 
 import cn.com.ktm.mt.model.bean.CsSecurityUser;
+import cn.com.ktm.mt.model.security.response.FindSecurityUserListResModel;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface CsSecurityUserMapper {
@@ -24,4 +27,7 @@ public interface CsSecurityUserMapper {
     CsSecurityUser selectByUserIdAndPassword(@Param("id")int userId,@Param("password") String password);
 
     int updateUserById(@Param("id")int userId);
+
+    //查询列表
+    List<FindSecurityUserListResModel> selectUserListByCondition(@Param("searchKey") String searchKey, @Param("searchContent") String searchContent);
 }

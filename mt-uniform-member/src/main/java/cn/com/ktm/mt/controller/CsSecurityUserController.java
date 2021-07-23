@@ -6,6 +6,7 @@ import cn.com.ktm.mt.model.exception.AssertError;
 import cn.com.ktm.mt.model.message.OtaResponse;
 import cn.com.ktm.mt.model.message.member.resetpassword.request.ResetPasswordRequest;
 import cn.com.ktm.mt.model.security.request.*;
+import cn.com.ktm.mt.model.security.request.user.FindSecurityUserListReq;
 import cn.com.ktm.mt.module.CsSecurityRoleModule;
 import cn.com.ktm.mt.module.CsSecurityUserModule;
 import cn.com.ktm.mt.module.CsSecurityUserRoleModule;
@@ -27,6 +28,27 @@ public class CsSecurityUserController {
 
     @Autowired
     private CsSecurityUserRoleModule csSecurityUserRoleModule;
+
+
+    /**
+     * 后台--系统管理员列表
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "admin/findUserList", consumes = "application/json")
+    public OtaResponse selectUserList(@RequestBody FindSecurityUserListReq request) {
+        OtaResponse process = new OtaResponse<Integer>();
+        try {
+            process = csSecurityUserModule.selectUserListByCondition(request);
+        } catch (AssertError e) {
+            process = OtaResponse.fail(e.getErrorCode().getCode(), e.getMessage(),null,null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return process;
+    }
+
+
 
     /**
      * 后台--登录
@@ -124,4 +146,5 @@ public class CsSecurityUserController {
         }
         return process;
     }
+
 }
