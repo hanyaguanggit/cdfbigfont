@@ -76,4 +76,11 @@
     where roleid = #{roleid,jdbcType=INTEGER}
     and userid = #{userid,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cs_security_user_role
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
 </mapper>

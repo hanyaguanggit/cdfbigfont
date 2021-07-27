@@ -31,4 +31,17 @@ public class CsSecurityUserService {
    public List<FindSecurityUserListResModel> selectUserListByCondition(String searchKey, String searchContent){
        return csSecurityUserMapper.selectUserListByCondition(searchKey,searchContent);
    };
+   public int insertUser(CsSecurityUser csSecurityUser){
+       return csSecurityUserMapper.insert(csSecurityUser);
+   }
+   public CsSecurityUser selectUserById(int userId){
+       return csSecurityUserMapper.selectByPrimaryKey(userId);
+   }
+   public int updateUserLockById(Integer locked,int userId){
+       return csSecurityUserMapper.updateUserLockById(locked,userId);
+   }
+   public int updateUserEnabledById(Integer enabled,int userId){
+       return csSecurityUserMapper.updateUserEnabledById(enabled,userId);
+   }
+
 }

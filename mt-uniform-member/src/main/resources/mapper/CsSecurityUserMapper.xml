@@ -22,7 +22,7 @@
   <sql id="Base_Column_List" >
     id, userName, password, expiryDate, locked, credentialExpiryDate, enabled, avatar, 
     loginName, mobilePhoneNo, email, createDate, deleted, creator, lastModifiedUser, 
-    lastModifiedTime
+    lastModifiedTime,shopId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -34,21 +34,21 @@
     delete from cs_security_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUser" >
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUser" useGeneratedKeys="true" keyProperty="id">
     insert into cs_security_user (id, userName, password, 
       expiryDate, locked, credentialExpiryDate, 
       enabled, avatar, loginName, 
       mobilePhoneNo, email, createDate, 
       deleted, creator, lastModifiedUser, 
-      lastModifiedTime)
+      lastModifiedTime,shopId)
     values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{expiryDate,jdbcType=TIMESTAMP}, #{locked,jdbcType=BIT}, #{credentialExpiryDate,jdbcType=TIMESTAMP}, 
       #{enabled,jdbcType=BIT}, #{avatar,jdbcType=INTEGER}, #{loginName,jdbcType=VARCHAR}, 
       #{mobilePhoneNo,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{deleted,jdbcType=SMALLINT}, #{creator,jdbcType=INTEGER}, #{lastModifiedUser,jdbcType=INTEGER}, 
-      #{lastModifiedTime,jdbcType=TIMESTAMP})
+      #{lastModifiedTime,jdbcType=TIMESTAMP}, #{shopId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUser" >
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.bean.CsSecurityUser" useGeneratedKeys="true" keyProperty="id">
     insert into cs_security_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -98,6 +98,9 @@
       </if>
       <if test="lastModifiedTime != null" >
         lastModifiedTime,
+      </if>
+      <if test="shopId != null">
+        shopId,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -199,6 +202,9 @@
       <if test="lastModifiedTime != null" >
         lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="shopId != null">
+        shopId = #{shopId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -218,7 +224,8 @@
       deleted = #{deleted,jdbcType=SMALLINT},
       creator = #{creator,jdbcType=INTEGER},
       lastModifiedUser = #{lastModifiedUser,jdbcType=INTEGER},
-      lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP}
+      lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      shopId = #{shopId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByLoginNameAndPassword" resultMap="BaseResultMap" parameterType="cn.com.ktm.mt.model.security.request.LoginRequestVoBody" >
@@ -241,13 +248,12 @@
       password = #{password,jdbcType=VARCHAR},
     where id = #{id,jdbcType=INTEGER}
   </update>
-
   <select id="selectUserListByCondition" resultType="cn.com.ktm.mt.model.security.response.FindSecurityUserListResModel" parameterType="cn.com.ktm.mt.model.security.request.user.FindSecurityUserListReqBody" >
     SELECT csu.id userId,csu.userName userName,csu.loginName loginName,csu.mobilePhoneNo mobilePhoneNo,csu.email email,csu.expiryDate expiryDate,csu.createDate,csu.enabled enabled,csu.locked locked,csr.id roleId,csr.`name` as roleName
     FROM  cs_security_user csu
     LEFT JOIN cs_security_user_role csur ON csu.id = csur.userid
     LEFT JOIN cs_security_role csr ON csur.roleid = csr.id
-    where 1=1
+    where shopId = #{shopId,jdbcType=VARCHAR}
       <if test="searchKey !=null">
         <if test="searchKey =='userName'">
           and userName = #{searchContent,jdbcType=VARCHAR}
@@ -266,4 +272,18 @@
         </if>
       </if>
   </select>
+  <update id="updateUserLockById" parameterType="java.lang.Integer" >
+    update cs_security_user
+    set
+      locked = #{locked,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateUserEnabledById" parameterType="java.lang.Integer" >
+    update cs_security_user
+    set
+      enabled = #{enabled,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
 </mapper>

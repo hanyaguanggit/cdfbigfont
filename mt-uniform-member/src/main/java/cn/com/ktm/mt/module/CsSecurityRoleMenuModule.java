@@ -52,7 +52,7 @@ public class CsSecurityRoleMenuModule {
             response.setDescribe("该角色权限无变更,无需保存");
             return response;
         }
-        if (!rmlist.isEmpty()) {//不为空
+        if (!rmlist.isEmpty()) {
             for (CsSecurityRoleMenu rm : rmlist) {
                 int d = csSecurityRoleMenuService.deleteRoleMenu(rm.getId());
                 Assert.isTrue(d > 0, ResponseConsts.DELETE_ROLR_MENU_ERROR, "更新角色权限异常。");
@@ -63,7 +63,7 @@ public class CsSecurityRoleMenuModule {
             } else {
                 a = 1;//删除了权限
             }
-        } else {//为空
+        } else {
             if (request.getBody().getMenuIdList().size() > 0) {
                 a = addroleMenu(newMenuList, request.getBody().getRoleId());
             }

@@ -4,6 +4,8 @@ import cn.com.ktm.mt.model.bean.CsSecurityUserRole;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CsSecurityUserRoleMapper {
     int deleteByPrimaryKey(Integer id);
@@ -19,4 +21,6 @@ public interface CsSecurityUserRoleMapper {
     int updateByPrimaryKey(CsSecurityUserRole record);
 
     CsSecurityUserRole selectByRoleIdAndUserId(@Param("roleid") Integer roleid,@Param("userid") Integer userid);
+
+    List<CsSecurityUserRole> selectByUserId(Integer userId);
 }

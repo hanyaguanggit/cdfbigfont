@@ -30,4 +30,8 @@ public interface CsSecurityUserMapper {
 
     //查询列表
     List<FindSecurityUserListResModel> selectUserListByCondition(@Param("searchKey") String searchKey, @Param("searchContent") String searchContent);
+
+    int updateUserLockById(@Param("locked") Integer locked,@Param("id") Integer userId);
+
+    int updateUserEnabledById(@Param("enabled") Integer enabled,@Param("id") Integer userId);
 }

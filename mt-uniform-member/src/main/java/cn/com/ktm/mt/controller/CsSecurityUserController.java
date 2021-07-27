@@ -6,7 +6,10 @@ import cn.com.ktm.mt.model.exception.AssertError;
 import cn.com.ktm.mt.model.message.OtaResponse;
 import cn.com.ktm.mt.model.message.member.resetpassword.request.ResetPasswordRequest;
 import cn.com.ktm.mt.model.security.request.*;
+import cn.com.ktm.mt.model.security.request.user.EnabledReqVo;
 import cn.com.ktm.mt.model.security.request.user.FindSecurityUserListReq;
+import cn.com.ktm.mt.model.security.request.user.KeepSysUserReqVo;
+import cn.com.ktm.mt.model.security.request.user.LockedReqVo;
 import cn.com.ktm.mt.module.CsSecurityRoleModule;
 import cn.com.ktm.mt.module.CsSecurityUserModule;
 import cn.com.ktm.mt.module.CsSecurityUserRoleModule;
@@ -147,4 +150,58 @@ public class CsSecurityUserController {
         return process;
     }
 
+    /**
+     * 后台--保存用户
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "admin/keepSysUser", consumes = "application/json")
+    public OtaResponse keepSysUser(@RequestBody KeepSysUserReqVo request) {
+        OtaResponse process = new OtaResponse<>();
+        try {
+            process = csSecurityUserModule.keepSysUser(request);
+        } catch (AssertError e) {
+            process = OtaResponse.fail(e.getErrorCode().getCode(), e.getMessage(),null,null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return process;
+    }
+
+    /**
+     * 后台--锁定/未锁定 0未锁定，1锁定
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "admin/updateLockedSysUser", consumes = "application/json")
+    public OtaResponse updateLockedSysUser(@RequestBody LockedReqVo request) {
+        OtaResponse process = new OtaResponse<>();
+        try {
+            process = csSecurityUserModule.updateLockedUser(request);
+        } catch (AssertError e) {
+            process = OtaResponse.fail(e.getErrorCode().getCode(), e.getMessage(),null,null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return process;
+    }
+
+
+    /**
+     * 后台--启用/禁用  0未启用，1启动
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "admin/updateEnabledSysUser", consumes = "application/json")
+    public OtaResponse updateEnabledSysUser(@RequestBody EnabledReqVo request) {
+        OtaResponse process = new OtaResponse<>();
+        try {
+            process = csSecurityUserModule.updateEnabledUser(request);
+        } catch (AssertError e) {
+            process = OtaResponse.fail(e.getErrorCode().getCode(), e.getMessage(),null,null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return process;
+    }
 }

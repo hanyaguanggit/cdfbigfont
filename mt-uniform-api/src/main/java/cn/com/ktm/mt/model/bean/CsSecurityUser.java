@@ -9,7 +9,7 @@ import java.util.Date;
  * 系统用户 cs_security_user
  */
 @Data
-public class CsSecurityUser implements Serializable {
+public class CsSecurityUser  implements Serializable{
     private Integer id;
 
     private String userName;
@@ -41,6 +41,8 @@ public class CsSecurityUser implements Serializable {
     private Integer lastModifiedUser;
 
     private Date lastModifiedTime;
+
+    private Integer shopId;
 
 
 }

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.ktm.mt.mapper.CsArticleMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.ktm.mt.model.bean.CsArticle" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="categoryId" property="categoryId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="nameEN" property="nameEN" jdbcType="VARCHAR" />
+    <result column="authorName" property="authorName" jdbcType="VARCHAR" />
+    <result column="authorNameEN" property="authorNameEN" jdbcType="VARCHAR" />
+    <result column="publishTime" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="infoEN" property="infoEN" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="sequence" property="sequence" jdbcType="SMALLINT" />
+    <result column="visitCount" property="visitCount" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+    <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+    <result column="lastModifiedUser" property="lastModifiedUser" jdbcType="INTEGER" />
+    <result column="picId" property="picId" jdbcType="INTEGER" />
+    <result column="shopId" property="shopId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.com.ktm.mt.model.bean.CsArticleWithBLOBs" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="contentEN" property="contentEN" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, categoryId, name, nameEN, authorName, authorNameEN, publishTime, info, infoEN, 
+    status, sequence, visitCount, createTime, creator, lastModifiedTime, lastModifiedUser, 
+    picId, shopId
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, contentEN
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cs_article
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_article
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.ktm.mt.model.bean.CsArticleWithBLOBs" >
+    insert into cs_article (id, categoryId, name, 
+      nameEN, authorName, authorNameEN, 
+      publishTime, info, infoEN, 
+      status, sequence, visitCount, 
+      createTime, creator, lastModifiedTime, 
+      lastModifiedUser, picId, shopId, 
+      content, contentEN)
+    values (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{nameEN,jdbcType=VARCHAR}, #{authorName,jdbcType=VARCHAR}, #{authorNameEN,jdbcType=VARCHAR}, 
+      #{publishTime,jdbcType=TIMESTAMP}, #{info,jdbcType=VARCHAR}, #{infoEN,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{sequence,jdbcType=SMALLINT}, #{visitCount,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=INTEGER}, #{lastModifiedTime,jdbcType=TIMESTAMP}, 
+      #{lastModifiedUser,jdbcType=INTEGER}, #{picId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR}, #{contentEN,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.ktm.mt.model.bean.CsArticleWithBLOBs" >
+    insert into cs_article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="categoryId != null" >
+        categoryId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="nameEN != null" >
+        nameEN,
+      </if>
+      <if test="authorName != null" >
+        authorName,
+      </if>
+      <if test="authorNameEN != null" >
+        authorNameEN,
+      </if>
+      <if test="publishTime != null" >
+        publishTime,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="infoEN != null" >
+        infoEN,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="sequence != null" >
+        sequence,
+      </if>
+      <if test="visitCount != null" >
+        visitCount,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="lastModifiedTime != null" >
+        lastModifiedTime,
+      </if>
+      <if test="lastModifiedUser != null" >
+        lastModifiedUser,
+      </if>
+      <if test="picId != null" >
+        picId,
+      </if>
+      <if test="shopId != null" >
+        shopId,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="contentEN != null" >
+        contentEN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEN != null" >
+        #{nameEN,jdbcType=VARCHAR},
+      </if>
+      <if test="authorName != null" >
+        #{authorName,jdbcType=VARCHAR},
+      </if>
+      <if test="authorNameEN != null" >
+        #{authorNameEN,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="infoEN != null" >
+        #{infoEN,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="sequence != null" >
+        #{sequence,jdbcType=SMALLINT},
+      </if>
+      <if test="visitCount != null" >
+        #{visitCount,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifiedTime != null" >
+        #{lastModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedUser != null" >
+        #{lastModifiedUser,jdbcType=INTEGER},
+      </if>
+      <if test="picId != null" >
+        #{picId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentEN != null" >
+        #{contentEN,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.ktm.mt.model.bean.CsArticleWithBLOBs" >
+    update cs_article
+    <set >
+      <if test="categoryId != null" >
+        categoryId = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEN != null" >
+        nameEN = #{nameEN,jdbcType=VARCHAR},
+      </if>
+      <if test="authorName != null" >
+        authorName = #{authorName,jdbcType=VARCHAR},
+      </if>
+      <if test="authorNameEN != null" >
+        authorNameEN = #{authorNameEN,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        publishTime = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="infoEN != null" >
+        infoEN = #{infoEN,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="sequence != null" >
+        sequence = #{sequence,jdbcType=SMALLINT},
+      </if>
+      <if test="visitCount != null" >
+        visitCount = #{visitCount,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifiedTime != null" >
+        lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedUser != null" >
+        lastModifiedUser = #{lastModifiedUser,jdbcType=INTEGER},
+      </if>
+      <if test="picId != null" >
+        picId = #{picId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        shopId = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentEN != null" >
+        contentEN = #{contentEN,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.com.ktm.mt.model.bean.CsArticleWithBLOBs" >
+    update cs_article
+    set categoryId = #{categoryId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      nameEN = #{nameEN,jdbcType=VARCHAR},
+      authorName = #{authorName,jdbcType=VARCHAR},
+      authorNameEN = #{authorNameEN,jdbcType=VARCHAR},
+      publishTime = #{publishTime,jdbcType=TIMESTAMP},
+      info = #{info,jdbcType=VARCHAR},
+      infoEN = #{infoEN,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      sequence = #{sequence,jdbcType=SMALLINT},
+      visitCount = #{visitCount,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=INTEGER},
+      lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      lastModifiedUser = #{lastModifiedUser,jdbcType=INTEGER},
+      picId = #{picId,jdbcType=INTEGER},
+      shopId = #{shopId,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR},
+      contentEN = #{contentEN,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.ktm.mt.model.bean.CsArticle" >
+    update cs_article
+    set categoryId = #{categoryId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      nameEN = #{nameEN,jdbcType=VARCHAR},
+      authorName = #{authorName,jdbcType=VARCHAR},
+      authorNameEN = #{authorNameEN,jdbcType=VARCHAR},
+      publishTime = #{publishTime,jdbcType=TIMESTAMP},
+      info = #{info,jdbcType=VARCHAR},
+      infoEN = #{infoEN,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      sequence = #{sequence,jdbcType=SMALLINT},
+      visitCount = #{visitCount,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=INTEGER},
+      lastModifiedTime = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      lastModifiedUser = #{lastModifiedUser,jdbcType=INTEGER},
+      picId = #{picId,jdbcType=INTEGER},
+      shopId = #{shopId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByCategoryId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cs_article
+    where categoryId = #{categoryId,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -230,12 +230,26 @@ public class ResponseConsts {
     @ResponseCode(value = "创建角色权限失败")
     public static final int CREATE_ROLE_MENU_ERROR = 224;
 
-    @ResponseCode(value = "该角色权限无变更,不需要保存")
+    @ResponseCode(value = "角色权限无变更,不需要保存")
     public static final int SAME_ROLE_MENU = 225;
 
-    @ResponseCode(value = "删除用户角色失败")
+    @ResponseCode(value = "解绑用户角色失败")
     public static final int DELETE_USER_ROLR_ERROR = 226;
 
+    @ResponseCode(value = "创建用户失败")
+    public static final int CREATE_SYS_USER_ERROR = 227;
+
+    @ResponseCode(value = "用户不存在")
+    public static final int SYS_USER_NOT_EXSIT = 228;
+
+    @ResponseCode(value = "更新系统用户失败")
+    public static final int UPDATE_SYS_USER_ERROR = 229;
+
+    @ResponseCode(value = "更新系统用户锁定状态失败")
+    public static final int UPDATE_SYS_USER_LOCKED_ERROR = 230;
+
+    @ResponseCode(value = "更新系统用户启用状态失败")
+    public static final int UPDATE_SYS_USER_ENABLED_ERROR = 231;
 
     static {
         Field[] fields = ResponseConsts.class.getDeclaredFields();
