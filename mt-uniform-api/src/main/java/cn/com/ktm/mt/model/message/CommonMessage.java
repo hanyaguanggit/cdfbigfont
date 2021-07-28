@@ -41,8 +41,16 @@ public interface CommonMessage<T extends Body> extends Message {
 	 * @param body the responseBody to set
 	 */
 	public void setBody(T body);
-	
-	
 
+
+	/**
+	 * @return the header
+	 */
+	public  Integer getShopId();
+
+	/**
+	 * @param shopId the header to set
+	 */
+	public void setShopId(Integer shopId);
 
 }

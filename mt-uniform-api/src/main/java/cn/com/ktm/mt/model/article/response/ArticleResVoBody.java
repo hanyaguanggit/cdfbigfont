@@ -22,4 +22,5 @@ public class ArticleResVoBody{
     private String info;//文章简介
     private String content;//文章内容
     private Integer visitCount;//访问次数
+    private Integer shopId;//店铺id
 }

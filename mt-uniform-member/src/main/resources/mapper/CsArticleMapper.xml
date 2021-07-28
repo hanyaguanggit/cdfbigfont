@@ -303,5 +303,6 @@
     <include refid="Blob_Column_List" />
     from cs_article
     where categoryId = #{categoryId,jdbcType=INTEGER}
+    and shopId = #{shopId,jdbcType=INTEGER};
   </select>
 </mapper>

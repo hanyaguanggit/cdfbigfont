@@ -2,6 +2,7 @@ package cn.com.ktm.mt.mapper;
 
 import cn.com.ktm.mt.model.bean.CsArticle;
 import cn.com.ktm.mt.model.bean.CsArticleWithBLOBs;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,5 +22,5 @@ public interface CsArticleMapper {
 
     int updateByPrimaryKey(CsArticle record);
 
-    List<CsArticleWithBLOBs> selectByCategoryId(Integer categoryId);
+    List<CsArticleWithBLOBs> selectByCategoryId(@Param("categoryId") Integer categoryId,@Param("shopId") Integer shopId);
 }

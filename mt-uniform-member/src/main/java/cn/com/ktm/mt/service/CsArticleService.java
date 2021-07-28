@@ -13,7 +13,7 @@ public class CsArticleService {
     @Autowired
     private CsArticleMapper csArticleMapper;
 
-    public List<CsArticleWithBLOBs> selectByCategoryId(Integer categoryId){
-       return  csArticleMapper.selectByCategoryId(categoryId);
+    public List<CsArticleWithBLOBs> selectByCategoryId(Integer categoryId,Integer shopId){
+       return  csArticleMapper.selectByCategoryId(categoryId,shopId);
     }
 }

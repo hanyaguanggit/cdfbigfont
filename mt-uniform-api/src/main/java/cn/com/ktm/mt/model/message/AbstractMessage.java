@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public abstract class AbstractMessage<T extends Body > implements CommonMessage<T>  {
 	private String partnerId;
 	private Long channelId;
+	private Integer shopId;
 	private T body;
 
 
@@ -38,6 +39,17 @@ public abstract class AbstractMessage<T extends Body > implements CommonMessage<
     public void setChannelId(Long channelId) {
         this.channelId = channelId;
     }
+
+    //店铺id
+    @Override
+	@JsonProperty("shopId")
+    public Integer getShopId(){ return shopId;}
+
+	@Override
+	public void setShopId(Integer shopId) {
+		this.shopId = shopId;
+	}
+
 
 	@Override
 	public T getBody() {

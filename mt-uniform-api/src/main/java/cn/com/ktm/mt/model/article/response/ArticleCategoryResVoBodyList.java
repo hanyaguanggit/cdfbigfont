@@ -10,11 +10,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArticleResVoBodyList implements Body {
-    private List<ArticleResVoBody> articleList;
-
+public class ArticleCategoryResVoBodyList implements Body {
+    private List<ArticleCategoryResVoBody> articleCategoryResVoBodyList;
     @Override
     public void valid() {
-
     }
 }

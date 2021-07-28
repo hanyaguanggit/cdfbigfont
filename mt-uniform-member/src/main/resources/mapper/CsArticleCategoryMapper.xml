@@ -161,4 +161,10 @@
       shopId = #{shopId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByShopId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from cs_article_category
+    where shopId = #{shopId,jdbcType=INTEGER}
+  </select>
 </mapper>

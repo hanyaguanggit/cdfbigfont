@@ -3,16 +3,13 @@ package cn.com.ktm.mt.module;
 import cn.com.ktm.mt.model.article.request.ArticleReqVo;
 import cn.com.ktm.mt.model.article.response.ArticleResVoBody;
 import cn.com.ktm.mt.model.article.response.ArticleResVoBodyList;
-import cn.com.ktm.mt.model.bean.CsArticle;
 import cn.com.ktm.mt.model.bean.CsArticleWithBLOBs;
 import cn.com.ktm.mt.model.constant.ResponseConsts;
 import cn.com.ktm.mt.model.message.OtaResponse;
 import cn.com.ktm.mt.model.util.utils.DateUtil;
-import cn.com.ktm.mt.model.util.utils.DateUtils;
 import cn.com.ktm.mt.service.CsArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +24,7 @@ public class CsArticleModule {
      List<ArticleResVoBody> aList = new ArrayList<>();
      OtaResponse<ArticleResVoBodyList> response = new OtaResponse<>();
      ArticleResVoBodyList articleResVoBodyList = new ArticleResVoBodyList();
-     List<CsArticleWithBLOBs> csArticleList = csArticleService.selectByCategoryId(request.getBody().getCategoryId());
+     List<CsArticleWithBLOBs> csArticleList = csArticleService.selectByCategoryId(request.getBody().getCategoryId(),request.getShopId());
     if(csArticleList.size() > 0){
         csArticleList.forEach(a ->{
             ArticleResVoBody articleResVoBody = new ArticleResVoBody();
@@ -48,6 +45,7 @@ public class CsArticleModule {
             articleResVoBody.setStatus((int)a.getStatus());
             articleResVoBody.setSequence((int)a.getSequence());
             articleResVoBody.setVisitCount(a.getVisitCount());
+            articleResVoBody.setShopId(a.getShopId());
             aList.add(articleResVoBody);
         });
     }
