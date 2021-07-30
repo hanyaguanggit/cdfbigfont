@@ -1,5 +1,5 @@
-package cn.com.ktm.mt.model.sitestructure.response;
 
+package cn.com.ktm.mt.model.cssitestructure.response;
 import cn.com.ktm.mt.model.cssitestructure.response.CsSiteStuctureResponseBody;
 import cn.com.ktm.mt.model.message.OtaResponse;
 import lombok.Data;

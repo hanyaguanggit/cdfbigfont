@@ -13,7 +13,6 @@
             <artifactId>mt-uniform-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-
   </dependencies>
     
     <build>
