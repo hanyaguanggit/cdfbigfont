@@ -135,8 +135,10 @@ public class CsSurfaceSectionModule {
           logger.error("创建模块位置id-模块位置主键约束重复！,positionId={}",csStructurePosition.getId());
            e.printStackTrace();
         }
-        if (csStructurePosition.getId() == null)
-            Assert.fail(ResponseConsts.CREATE_POSITION_ERROR, "创建模块位置id-位置id错误");
+        if (csStructurePosition.getId() == null){
+            logger.error("创建模块位置id-模块位置主键约束重复！,positionId={}",csStructurePosition.getId());
+        }
+           // Assert.fail(ResponseConsts.CREATE_POSITION_ERROR, "创建模块位置id-位置id错误");
         return csStructurePosition;
     }
 
@@ -184,11 +186,11 @@ public class CsSurfaceSectionModule {
             csSurfaceSectionTemplateConfigService.addCsSurfaceSectionTemplateConfig(csSurfaceSectionTemplateConfig);
         }catch (Exception e){
           e.printStackTrace();
-            Assert.fail(ResponseConsts.CREATE_POSITION_ERROR, "创建模块配置id错误");
             logger.error("创建模块配置信息异常，templateConfigId={}",csSurfaceSectionTemplateConfig.getId());
         }
         if(csSurfaceSectionTemplateConfig.getId() == null){
-            Assert.fail(ResponseConsts.CREATE_POSITION_ERROR, "创建模块配置id错误");
+            //Assert.fail(ResponseConsts.CREATE_POSITION_ERROR, "创建模块配置id错误");
+            logger.error("创建模块配置信息异常，templateConfigId={}",csSurfaceSectionTemplateConfig.getId());
         }
         return csSurfaceSectionTemplateConfig;
     }
