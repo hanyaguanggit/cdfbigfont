@@ -1,7 +1,7 @@
 package cn.com.ktm.mt.mapper;
 
 import cn.com.ktm.mt.model.CsSiteStructure;
-import cn.com.ktm.mt.model.sitestructure.response.CsSiteStuctureHomeResponseVo;
+import cn.com.ktm.mt.model.cssitestructure.response.CsSiteStuctureHomeResponseVo;
 import cn.com.ktm.mt.model.sitestructure.response.HomePageResponseBody;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

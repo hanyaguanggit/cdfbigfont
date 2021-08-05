@@ -2,9 +2,8 @@ package cn.com.ktm.mt.service;
 
 import cn.com.ktm.mt.mapper.CsSiteStructureMapper;
 import cn.com.ktm.mt.model.CsSiteStructure;
-import cn.com.ktm.mt.model.sitestructure.response.CsSiteStuctureHomeResponseVo;
+import cn.com.ktm.mt.model.cssitestructure.response.CsSiteStuctureHomeResponseVo;
 import cn.com.ktm.mt.model.sitestructure.response.HomePageResponseBody;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ public class CsSiteStructureService {
 
     /**
      * 根据上级id获取网站信息（例如首页：45001。。。）
-     * @param parentId
+     * @param siteStructureIdList
      * @return
      */
     public List<CsSiteStructure> findCsSiteStructureByParentId(Integer siteStructureIdList) {

@@ -110,7 +110,6 @@ public class DateUtils {
 
 	/**
 	 * 获取两个日期间的月份数量
-	 * 
 	 * @param startDate
 	 * @param endDate
 	 * @return
@@ -332,8 +331,7 @@ public class DateUtils {
 	/**
 	 * 获取某年月的最后一天
 	 * 
-	 * @param year
-	 * @param month
+	 * @param ym
 	 * @return
 	 * @throws ParseException 
 	 */
