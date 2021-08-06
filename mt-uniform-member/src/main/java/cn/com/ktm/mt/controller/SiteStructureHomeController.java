@@ -16,7 +16,7 @@ public class SiteStructureHomeController {
     private CsSiteStructureModule csSiteStructureModule;
 
     /**
-     * 首页信息请求测试
+     * 首页信息请求
      */
     @RequestMapping(path = "/member/findhome", method = RequestMethod.POST, consumes = "application/json")
     public OtaResponse findCsSiteStructureHome(@RequestBody SiteStructureHomeRequest request) {
