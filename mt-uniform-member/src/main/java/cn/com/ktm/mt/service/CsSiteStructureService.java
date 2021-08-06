@@ -3,7 +3,7 @@ package cn.com.ktm.mt.service;
 import cn.com.ktm.mt.mapper.CsSiteStructureMapper;
 import cn.com.ktm.mt.model.CsSiteStructure;
 import cn.com.ktm.mt.model.cssitestructure.response.CsSiteStuctureHomeResponseVo;
-import cn.com.ktm.mt.model.sitestructure.response.HomePageResponseBody;
+import cn.com.ktm.mt.model.home.response.HomePageResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,11 +2,13 @@ package cn.com.ktm.mt.module;
 
 import cn.com.ktm.mt.model.CsSiteStructure;
 import cn.com.ktm.mt.model.constant.SectionConsts;
+import cn.com.ktm.mt.model.cssitestructure.request.CsSiteStuctureRequest;
+import cn.com.ktm.mt.model.cssitestructure.response.CsSiteStuctureHomeResponseVo;
+import cn.com.ktm.mt.model.cssitestructure.response.CsSiteStuctureListRes;
+import cn.com.ktm.mt.model.cssitestructure.response.CsSiteStuctureResponse;
+import cn.com.ktm.mt.model.cssitestructure.response.CsSiteStuctureResponseBody;
 import cn.com.ktm.mt.model.home.request.SiteStructureHomeRequest;
 import cn.com.ktm.mt.model.home.response.*;
-import cn.com.ktm.mt.model.sitestructure.request.CsSiteStuctureListRequest;
-import cn.com.ktm.mt.model.sitestructure.request.CsSiteStuctureRequest;
-import cn.com.ktm.mt.model.sitestructure.response.*;
 import cn.com.ktm.mt.model.constant.ResponseConsts;
 import cn.com.ktm.mt.model.exception.Assert;
 import cn.com.ktm.mt.model.message.OtaResponse;
@@ -147,7 +149,7 @@ public class CsSiteStructureModule {
      * @param request
      * @return
      */
-    public OtaResponse findCsSiteStructureByParentId(CsSiteStuctureListRequest request) {
+    public OtaResponse findCsSiteStructureByParentId(CsSiteStuctureRequest request) {
         Assert.notNull(request.getId(), ResponseConsts.MEMBER_PARAM_CONTACT_ERROR, " id为空");
         CsSiteStuctureListRes response = new CsSiteStuctureListRes();
         List<CsSiteStuctureResponseBody> csList = new ArrayList<>();

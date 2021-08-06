@@ -104,7 +104,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 <!--获取离岛免税APP首页信息-->
-  <select id="showSiteStructureHome"  resultType="cn.com.ktm.mt.model.sitestructure.response.CsSiteStuctureHomeResponseVo">
+  <select id="showSiteStructureHome"  resultType="cn.com.ktm.mt.model.cssitestructure.response.CsSiteStuctureHomeResponseVo">
     select ssect.id sectionId,stc.sitestructureId siteStructureId,sst.`name` sitestructureName, sst.type type, stc.linkTabname linkTab,ssect.shopId shopId,ssect.positionTypeId positionTypeId
     from
     cs_site_structure sst
@@ -128,7 +128,7 @@
 	sectionId;
   </select>
 <!--根据动态表名获取对应表信息-->
-  <select id="findHomeRecommendDto" resultType="cn.com.ktm.mt.model.sitestructure.response.HomePageResponseBody" statementType="STATEMENT">
+  <select id="findHomeRecommendDto" resultType="cn.com.ktm.mt.model.home.response.HomePageResponseBody" statementType="STATEMENT">
    select * from ${tableName}  where sectionId = ${sectionId};
   </select>
 

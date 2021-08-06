@@ -1,4 +1,4 @@
-package cn.com.ktm.mt.model.sitestructure.response;
+package cn.com.ktm.mt.model.cssitestructure.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

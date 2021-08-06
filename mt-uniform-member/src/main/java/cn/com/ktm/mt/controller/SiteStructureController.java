@@ -1,9 +1,8 @@
 package cn.com.ktm.mt.controller;
 
+import cn.com.ktm.mt.model.cssitestructure.request.CsSiteStuctureRequest;
 import cn.com.ktm.mt.model.exception.AssertError;
 import cn.com.ktm.mt.model.message.OtaResponse;
-import cn.com.ktm.mt.model.sitestructure.request.CsSiteStuctureListRequest;
-import cn.com.ktm.mt.model.sitestructure.request.CsSiteStuctureRequest;
 import cn.com.ktm.mt.module.CsSiteStructureModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,7 +58,7 @@ public class SiteStructureController {
      * @return
      */
     @PostMapping(path = "/member/findcsByParent", consumes = "application/json")
-    public OtaResponse findCsSiteStructureByparentId(@RequestBody CsSiteStuctureListRequest csSiteStuctureRequest) {
+    public OtaResponse findCsSiteStructureByparentId(@RequestBody CsSiteStuctureRequest csSiteStuctureRequest) {
         OtaResponse process = new OtaResponse();
         try {
             process  = csSiteStructureModule.findCsSiteStructureByParentId(csSiteStuctureRequest);

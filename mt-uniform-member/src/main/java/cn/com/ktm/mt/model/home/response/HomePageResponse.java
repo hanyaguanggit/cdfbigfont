@@ -1,4 +1,4 @@
-package cn.com.ktm.mt.model.sitestructure.response;
+package cn.com.ktm.mt.model.home.response;
 
 import cn.com.ktm.mt.model.message.OtaRequest;
 import lombok.Data;
